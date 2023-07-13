@@ -1,5 +1,5 @@
 baseurl: "/https://black-cat-enthusiast.github.io/page/"
-publishDir: docs
+publishDir: "docs"
 languageCode: en-US
 title: A Hugo website
 theme: hugo-lithium
