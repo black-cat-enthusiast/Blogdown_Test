@@ -2,29 +2,29 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://black-cat-enthusiast.github.io/page/</loc>
+    <loc>/</loc>
     <lastmod>2023-07-12T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>https://black-cat-enthusiast.github.io/page/2023/07/12/example-data/</loc>
+    <loc>/2023/07/12/example-data/</loc>
     <lastmod>2023-07-12T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>https://black-cat-enthusiast.github.io/page/2023/07/12/functions-in-r/</loc>
+    <loc>/2023/07/12/functions-in-r/</loc>
     <lastmod>2023-07-12T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>https://black-cat-enthusiast.github.io/page/post/</loc>
+    <loc>/post/</loc>
     <lastmod>2023-07-12T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>https://black-cat-enthusiast.github.io/page/2023/02/22/introduction-to-ggplot2/</loc>
+    <loc>/2023/02/22/introduction-to-ggplot2/</loc>
     <lastmod>2023-02-22T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>https://black-cat-enthusiast.github.io/page/2023/02/08/start-here/</loc>
+    <loc>/2023/02/08/start-here/</loc>
     <lastmod>2023-02-08T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>https://black-cat-enthusiast.github.io/page/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2016-05-05T21:48:51-07:00</lastmod>
   </url><url>
-    <loc>https://black-cat-enthusiast.github.io/page/categories/</loc>
+    <loc>/categories/</loc>
   </url><url>
-    <loc>https://black-cat-enthusiast.github.io/page/tags/</loc>
+    <loc>/tags/</loc>
   </url>
 </urlset>

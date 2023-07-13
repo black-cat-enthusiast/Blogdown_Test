@@ -10,7 +10,7 @@
 <meta property="og:title" content="Introduction to ggplot2 - A Hugo website">
 
 
-  <link href='https://black-cat-enthusiast.github.io/page/favicon.ico' rel='icon' type='image/x-icon'/>
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
 
 
 
@@ -27,8 +27,8 @@
 
 
 
-<link rel="stylesheet" href="/page/css/fonts.css" media="all">
-<link rel="stylesheet" href="/page/css/main.css" media="all">
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
 
 
 
@@ -37,8 +37,8 @@
     <div class="wrapper">
       <header class="header">
         <nav class="nav">
-  <a href="/" class="nav-logo">
-    <img src="/page/images/logo.png"
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
          width="50"
          height="50"
          alt="Logo">
@@ -46,7 +46,7 @@
 
   <ul class="nav-links">
     
-    <li><a href="/page/about/">About</a></li>
+    <li><a href="../../../../about/">About</a></li>
     
     <li><a href="https://github.com/rstudio/blogdown">Github</a></li>
     
@@ -129,7 +129,7 @@ data$CHALhorm = factor(data$CHALhorm,
               aes(x=PREhorm,y=Hab,shape=PREhorm,colour=PREhorm),
               width=0.15,size=5,alpha=0.5)
 </code></pre>
-<img src="https://black-cat-enthusiast.github.io/page/2023/02/22/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="../../../../2023/02/22/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 <p>Adjusting / writing over a few aspects of the code would allow for exploration of various approaches to data visualization.</p>
 <pre><code class="language-r">data %&gt;% # take the data, AND THEN
   select(c(&quot;ID&quot;,&quot;PREhorm&quot;,&quot;Hab&quot;,&quot;CHAL&quot;)) %&gt;% # select columns of interest
@@ -152,7 +152,7 @@ data$CHALhorm = factor(data$CHALhorm,
        x=&quot;&quot;,
        title=&quot;Change in Distance Travelled Between \n Habituation and Challenge Day&quot;)
 </code></pre>
-<img src="https://black-cat-enthusiast.github.io/page/2023/02/22/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="../../../../2023/02/22/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 <p>Using dplyr-style code blocks is the quickest way to generate in-line charts while exploring a dataset in R. to save a copy of the ggplot, assign the output of the code chunk to an object, then use ggsave to save the object as a png image:</p>
 <pre><code class="language-r">a &lt;- data %&gt;% # take the data, AND THEN
   select(c(&quot;ID&quot;,&quot;PREhorm&quot;,&quot;Hab&quot;,&quot;CHAL&quot;)) %&gt;% # select columns of interest
@@ -195,7 +195,7 @@ ggsave(&quot;example_image.png&quot;,a,height=4,width=4,dpi=300)
         <ul class="footer-links">
           
           <li>
-            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/page/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
           </li>
         </ul>
       </footer>
@@ -216,7 +216,7 @@ ggsave(&quot;example_image.png&quot;,a,height=4,width=4,dpi=300)
 
 
     
-<script src="/js/math-code.js"></script>
+<script src="../../../../js/math-code.js"></script>
 <script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 

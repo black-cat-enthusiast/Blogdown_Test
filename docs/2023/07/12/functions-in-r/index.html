@@ -10,7 +10,7 @@
 <meta property="og:title" content="Functions in R - A Hugo website">
 
 
-  <link href='https://black-cat-enthusiast.github.io/page/favicon.ico' rel='icon' type='image/x-icon'/>
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
 
 
 
@@ -27,8 +27,8 @@
 
 
 
-<link rel="stylesheet" href="/page/css/fonts.css" media="all">
-<link rel="stylesheet" href="/page/css/main.css" media="all">
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
 
 
 
@@ -37,8 +37,8 @@
     <div class="wrapper">
       <header class="header">
         <nav class="nav">
-  <a href="/" class="nav-logo">
-    <img src="/page/images/logo.png"
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
          width="50"
          height="50"
          alt="Logo">
@@ -46,7 +46,7 @@
 
   <ul class="nav-links">
     
-    <li><a href="/page/about/">About</a></li>
+    <li><a href="../../../../about/">About</a></li>
     
     <li><a href="https://github.com/rstudio/blogdown">Github</a></li>
     
@@ -198,16 +198,16 @@ D &lt;- bar_graph_function(CHAL, data$CHAL, &quot;Challenge Day&quot;)
 # Check out the 4 graphs
 A 
 </code></pre>
-<img src="https://black-cat-enthusiast.github.io/page/2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="../../../../2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 <pre><code class="language-r">B
 </code></pre>
-<img src="https://black-cat-enthusiast.github.io/page/2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-2.png" width="672" />
+<img src="../../../../2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-2.png" width="672" />
 <pre><code class="language-r">C
 </code></pre>
-<img src="https://black-cat-enthusiast.github.io/page/2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-3.png" width="672" />
+<img src="../../../../2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-3.png" width="672" />
 <pre><code class="language-r">D
 </code></pre>
-<img src="https://black-cat-enthusiast.github.io/page/2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-4.png" width="672" />
+<img src="../../../../2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-4.png" width="672" />
 <h1 id="create-panel">Create Panel</h1>
 <p>Arrange the 4 ggplots made with the function into a panel to see the data side-by-side.</p>
 <pre><code class="language-r">EB_panel &lt;- ggarrange(A,B,C,D,
@@ -217,7 +217,7 @@ A
 
 EB_panel
 </code></pre>
-<img src="https://black-cat-enthusiast.github.io/page/2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="../../../../2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 <p>To generate a more high-quality version of the panel, save it as a .png image with dpi=300, then call back the .png.</p>
 <ul>
 <li>This approach also allows for control of the dimensions of the image (in inches):</li>
@@ -240,7 +240,7 @@ knitr::include_graphics(&quot;EB_panel.png&quot;)
         <ul class="footer-links">
           
           <li>
-            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/page/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
           </li>
         </ul>
       </footer>
@@ -261,7 +261,7 @@ knitr::include_graphics(&quot;EB_panel.png&quot;)
 
 
     
-<script src="/js/math-code.js"></script>
+<script src="../../../../js/math-code.js"></script>
 <script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 
