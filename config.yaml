@@ -1,4 +1,5 @@
 baseurl: "/https://black-cat-enthusiast.github.io/page/"
+relativeURLs: false
 publishDir: "docs"
 languageCode: en-US
 title: A Hugo website
