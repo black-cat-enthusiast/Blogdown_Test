@@ -4,7 +4,10 @@ author: "JLB"
 date: 2023-02-08T21:13:14-05:00
 ---
 
-
+```{r setup, include=FALSE}
+require("knitr")
+options(htmltools.dir.version = FALSE)
+```
 
 # Why use reproduceable approaches to data analysis? 
 
@@ -29,21 +32,83 @@ date: 2023-02-08T21:13:14-05:00
   + Academic journals are increasingly moving towards requiring submission of code to replicate analyses and figures along for manuscript consideration. 
   
 **4. Improved workflows.**
-  + Especially when completing repetitive analysis or visualization tasks, using a code-based approach signficiantly improve speed and accuracy in workflows.
+  + Especially when completing repetitive analysis or visualization tasks, using a code-based approach substantially improves speed and accuracy in workflows.
 
+```{r, include=FALSE}
 
+a <- c(1,2,3,4)
+a <- as.data.frame(a)
+colnames(a) <- " "
+a$Program <- c("Excel","Prism","SPSS","R")
+
+tile <- a[1:4, 1:2]
+colnames(tile) <- c("ID", "Program")
+tile$`Learning curve` <- c(1,2,2,4)
+tile$Code <- c(0,0,5,5)
+tile$Graphs <- c(2,3,1,5)
+tile$Analyses <- c(1,2,5,5)
+tile$Cost <- c(5,5,5,0)
+tile$`Data storage` <- c(5,2,2,2)
+tile$Community <- c(2,1.5,1,5)
+
+empty <- tile
+empty$`Learning curve` <- c(0,0,0,0)
+empty$Code <- c(0,0,0,0)
+empty$Graphs <- c(0,0,0,0)
+empty$Analyses <- c(0,0,0,0)
+empty$Cost <- c(0,0,0,0)
+empty$`Data storage` <- c(0,0,0,0)
+empty$Community <- c(0,0,0,0)
+
+library(reshape2)
+library(ggplot2)
+
+```
 
 # Software options for data analysis
+```{r, include=FALSE}
+m_tile <- melt(tile, id.vars=c("ID", "Program"))
+m_empty <- melt(empty, id.vars=c("ID", "Program"))
 
+a <- ggplot(m_empty, aes(x=variable,y=Program,fill=value))+
+  geom_tile()+
+  coord_fixed()+ 
+  scale_fill_gradient(low = "white", high = "black")+
+  theme_classic()+
+  labs(y=" ",
+       x=" ",
+       title=" ")+
+  theme(axis.text = element_text(size=14))+
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(axis.text.x = element_text(angle=45, hjust=1))
+
+
+b <- ggplot(m_tile, aes(x=variable,y=Program,fill=value))+ 
+  geom_tile()+
+  coord_fixed()+ 
+  scale_fill_gradient(low = "white", high = "black")+
+  theme_classic()+
+  labs(y=" ",x=" ",title="R is the best")+
+  theme(axis.text = element_text(size=14))+
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(axis.text.x = element_text(angle=45, hjust=1))
+  
+ggsave("empty.png",a,height=5,width=10,dpi=300)
+ggsave("tilez.png",b,height=5,width=10,dpi=300)
+```
 
 A variety of programs are available to you to execute your data analysis / visualization needs.
-<img src="empty.png" width="1500" />
+```{r, echo=FALSE}
+knitr::include_graphics("empty.png")
+```
 
 Each of these programs has strengths and weaknesses in different areas: 
 
 # Software options for data analysis
 
-<img src="tilez.png" width="1500" />
+```{r, echo=FALSE}
+knitr::include_graphics("tilez.png")
+```
 
 **Excel** is the best format for longterm storage of hardcoded data 
   + CSV format preferred for raw values
@@ -60,24 +125,21 @@ Each of these programs has strengths and weaknesses in different areas:
 
 ### Advantages of code-based strategies over point-and-click based approaches:
 
-- Allows for reproducible analyses across time
+- Allows for reproducible analyses and graphs across time
 - And reproduce ability between multiple analyses, figures, etc.
 - Drastically speeds up workflows after competency is reached. 
-- Provides a scaleable solution for data wrangling and analysis. 
-- Materials can be easily updated or tweaked for various purposes. 
-
+- Provides a scale-able solution for data wrangling and analysis. The size of the data set is not a major consideration when using a code-based approach. 
+- Materials can be easily updated or tweaked for various purposes. R provides a simple method to slightly tweak outputs for various presentation formats (e.g. slideshow, written report, publication figure).
 #### For example, it would be easy to include the code that I used to generate the above graph if I wanted to share the instructions with a more technical audience: 
 
 Load packages
-
-```r
+```{r}
 library(ggplot2) # For generating pretty graphs
 library(reshape2) # For data wrangling. 
 ```
 
 Generate data for tile chart
-
-```r
+```{r}
 a <- c(1,2,3,4) # Generate vector 1:4
 a <- as.data.frame(a) # Turn the vector into a dataframe
 a$Program <- c("Excel","Prism","SPSS","R") # Add a "Program" column
@@ -94,8 +156,7 @@ m_tile <- melt(tile, id.vars=c("ID", "Program")) # Switch to longform
 ```
 
 Generate the tile chart
-
-```r
+```{r}
 b <- ggplot(m_tile, aes(x=variable,y=Program,fill=value))+ 
   geom_tile()+
   coord_fixed()+ 
@@ -108,8 +169,6 @@ b <- ggplot(m_tile, aes(x=variable,y=Program,fill=value))+
 
 b # print out the result!
 ```
-
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 The code blocks above could be copied directly into R to generate the exact same chart that I have created. 
 
