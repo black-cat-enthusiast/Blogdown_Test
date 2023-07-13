@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>A Hugo website</title>
+    <link>/</link>
+    <description>Recent content on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Wed, 12 Jul 2023 21:13:14 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Example Data</title>
+      <link>/2023/07/12/example-data/</link>
+      <pubDate>Wed, 12 Jul 2023 21:13:14 -0500</pubDate>
+      
+      <guid>/2023/07/12/example-data/</guid>
+      <description>Example Data There are many available open-source datasets that can be used to explore the unlimited functionality of data analysis in R.
+I will use data from my MA thesis to explore basic graphing and data analysis in R.
+These data are also Published in a peer-reviewed journal.
+Methods On each of the 4 days of testing, rats completed a 1hr long open field test (run around empty box - 64cm * 64cm).</description>
+    </item>
+    
+    <item>
+      <title>Functions in R</title>
+      <link>/2023/07/12/functions-in-r/</link>
+      <pubDate>Wed, 12 Jul 2023 21:13:14 -0500</pubDate>
+      
+      <guid>/2023/07/12/functions-in-r/</guid>
+      <description>Utility of functions in R Any process that you find you want to carry out repeatedly can be made into a function In fact, you should make repetitive processes into functions DRY vs WET Code Both acronyms
+DRY - &amp;ldquo;Don&amp;rsquo;t Repeat Yourself&amp;rdquo;
+DRY (“Don&amp;rsquo;t Repeat Yourself”) principle follows the idea of every logic duplication being eliminated by abstraction. This means that during the development process we should avoid writing repetitive duplicated code as much as possible.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to ggplot2</title>
+      <link>/2023/02/22/introduction-to-ggplot2/</link>
+      <pubDate>Wed, 22 Feb 2023 21:13:14 -0500</pubDate>
+      
+      <guid>/2023/02/22/introduction-to-ggplot2/</guid>
+      <description>Why use ggplot2? There are several ways to create graphical visualizations in R, but ggplot is by far the most comprehensive and well-documented.
+ggplot2 allows for control of every element of the chart. any graph that you can imagine, you can make! library(tidyverse) # The tidyverse contains ggplot2.library(reshape2) # for the melt function.data &amp;lt;- read_csv(&amp;quot;EB_Rats_Nicotine_Sensitization.csv&amp;quot;) # get datadata$PREhorm = factor(data$PREhorm, levels=c(0,1),labels=c(&amp;quot;OIL&amp;quot;,&amp;quot;EB&amp;quot;))data$CHALhorm = factor(data$CHALhorm,levels=c(0,1),labels=c(&amp;quot;OIL&amp;quot;,&amp;quot;EB&amp;quot;))Take a look at the top 6 rows of data:</description>
+    </item>
+    
+    <item>
+      <title>Start Here</title>
+      <link>/2023/02/08/start-here/</link>
+      <pubDate>Wed, 08 Feb 2023 21:13:14 -0500</pubDate>
+      
+      <guid>/2023/02/08/start-here/</guid>
+      <description>Why use reproduceable approaches to data analysis? Word of mouth transmission of information will always lead to inaccuracies:
+Advantages to code-based (reproduceable) approaches to data analysis and visualization: 1. Maintain consistency between presentation formats by using continuous file structures.
+e.g. lab reports, committee reports, slideshow presentations, conference posters. 2. Maintain consistency between multiple similar graphs.
+e.g. match all the axes across a multi-panel figure. 3. Ease of sharing methods and results.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
+      
+      <guid>/about/</guid>
+      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie.</description>
+    </item>
+    
+  </channel>
+</rss>

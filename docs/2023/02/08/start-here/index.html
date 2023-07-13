@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.115.2">
+
+
+<title>Start Here - A Hugo website</title>
+<meta property="og:title" content="Start Here - A Hugo website">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">Github</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">3 min read</span>
+    
+
+    <h1 class="article-title">Start Here</h1>
+
+    
+    <span class="article-date">2023-02-08</span>
+    
+
+    <div class="article-content">
+      <h1 id="why-use-reproduceable-approaches-to-data-analysis">Why use reproduceable approaches to data analysis?</h1>
+<center>
+<p><em>Word of mouth transmission of information will <strong>always</strong> lead to inaccuracies:</em></p>
+<img src="https://comb.io/Pgg0xS.gif" width="487.5" height="300"/>
+</center>
+<h3 id="advantages-to-code-based-reproduceable-approaches-to-data-analysis-and-visualization">Advantages to code-based (reproduceable) approaches to data analysis and visualization:</h3>
+<p><strong>1. Maintain consistency between presentation formats by using continuous file structures.</strong></p>
+<ul>
+<li>e.g. lab reports, committee reports, slideshow presentations, conference posters.</li>
+</ul>
+<p><strong>2. Maintain consistency between multiple similar graphs.</strong></p>
+<ul>
+<li>e.g. match all the axes across a multi-panel figure.</li>
+</ul>
+<p><strong>3. Ease of sharing methods and results.</strong></p>
+<ul>
+<li>Academic journals are increasingly moving towards requiring submission of code to replicate analyses and figures along for manuscript consideration.</li>
+</ul>
+<p><strong>4. Improved workflows.</strong></p>
+<ul>
+<li>Especially when completing repetitive analysis or visualization tasks, using a code-based approach substantially improves speed and accuracy in workflows.</li>
+</ul>
+<h1 id="software-options-for-data-analysis">Software options for data analysis</h1>
+<p>A variety of programs are available to you to execute your data analysis / visualization needs.
+<img src="empty.png" width="1500" /></p>
+<p>Each of these programs has strengths and weaknesses in different areas:</p>
+<h1 id="software-options-for-data-analysis-1">Software options for data analysis</h1>
+<img src="tilez.png" width="1500" />
+<p><strong>Excel</strong> is the best format for longterm storage of hardcoded data</p>
+<ul>
+<li>CSV format preferred for raw values</li>
+<li>Excel wookbook format useful if computing data transformations that involve formulas).</li>
+</ul>
+<p><strong>R</strong> Provides the best combination of features! Best for basically everything!</p>
+<ul>
+<li>No point-and-click interface - code only.</li>
+</ul>
+<p><strong>SPSS</strong> has specific utility while learning methods of data analysis.</p>
+<ul>
+<li>Unique click-and-point-to-code function.</li>
+</ul>
+<h1 id="best-practice-write-code">Best Practice: Write code</h1>
+<h3 id="advantages-of-code-based-strategies-over-point-and-click-based-approaches">Advantages of code-based strategies over point-and-click based approaches:</h3>
+<ul>
+<li>Allows for reproducible analyses and graphs across time</li>
+<li>And reproduce ability between multiple analyses, figures, etc.</li>
+<li>Drastically speeds up workflows after competency is reached.</li>
+<li>Provides a scale-able solution for data wrangling and analysis. The size of the data set is not a major consideration when using a code-based approach.</li>
+<li>Materials can be easily updated or tweaked for various purposes. R provides a simple method to slightly tweak outputs for various presentation formats (e.g. slideshow, written report, publication figure).</li>
+</ul>
+<h4 id="for-example-it-would-be-easy-to-include-the-code-that-i-used-to-generate-the-above-graph-if-i-wanted-to-share-the-instructions-with-a-more-technical-audience">For example, it would be easy to include the code that I used to generate the above graph if I wanted to share the instructions with a more technical audience:</h4>
+<p>Load packages</p>
+<pre><code class="language-r">library(ggplot2) # For generating pretty graphs
+library(reshape2) # For data wrangling. 
+</code></pre>
+<p>Generate data for tile chart</p>
+<pre><code class="language-r">a &lt;- c(1,2,3,4) # Generate vector 1:4
+a &lt;- as.data.frame(a) # Turn the vector into a dataframe
+a$Program &lt;- c(&quot;Excel&quot;,&quot;Prism&quot;,&quot;SPSS&quot;,&quot;R&quot;) # Add a &quot;Program&quot; column
+tile &lt;- a # Reassign a  to &quot;tile&quot;
+colnames(tile) &lt;- c(&quot;ID&quot;, &quot;Program&quot;) # Name the columns
+tile$`Learning curve` &lt;- c(1,2,2,4) # Add data for each attribute
+tile$Code &lt;- c(0,0,5,5)
+tile$Graphs &lt;- c(2,3,1,5)
+tile$Analyses &lt;- c(1,2,5,5)
+tile$Cost &lt;- c(1,1,1,0)
+tile$`Data storage` &lt;- c(5,2,2,2)
+tile$Community &lt;- c(2,1.5,1,5)
+m_tile &lt;- melt(tile, id.vars=c(&quot;ID&quot;, &quot;Program&quot;)) # Switch to longform  
+</code></pre>
+<p>Generate the tile chart</p>
+<pre><code class="language-r">b &lt;- ggplot(m_tile, aes(x=variable,y=Program,fill=value))+ 
+  geom_tile()+
+  coord_fixed()+ 
+  scale_fill_gradient(low = &quot;white&quot;, high = &quot;black&quot;)+
+  theme_classic()+
+  labs(y=&quot; &quot;,x=&quot; &quot;,title=&quot;R is the best&quot;)+
+  theme(axis.text = element_text(size=14))+
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(axis.text.x = element_text(angle=45, hjust=1))
+
+b # print out the result!
+</code></pre>
+<img src="/2023/02/08/start-here/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<p>The code blocks above could be copied directly into R to generate the exact same chart that I have created.</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

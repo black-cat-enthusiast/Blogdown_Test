@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.115.2">
+
+
+<title>Introduction to ggplot2 - A Hugo website</title>
+<meta property="og:title" content="Introduction to ggplot2 - A Hugo website">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">Github</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">3 min read</span>
+    
+
+    <h1 class="article-title">Introduction to ggplot2</h1>
+
+    
+    <span class="article-date">2023-02-22</span>
+    
+
+    <div class="article-content">
+      <h1 id="why-use-ggplot2">Why use ggplot2?</h1>
+<p>There are several ways to create graphical visualizations in R, but ggplot is by far the most comprehensive and well-documented.</p>
+<ul>
+<li>ggplot2 allows for control of every element of the chart.</li>
+<li>any graph that you can imagine, you can make!</li>
+</ul>
+<pre><code class="language-r">library(tidyverse) # The tidyverse contains ggplot2.
+library(reshape2) # for the melt function.
+</code></pre>
+<pre><code class="language-r">data &lt;- read_csv(&quot;EB_Rats_Nicotine_Sensitization.csv&quot;) # get data
+
+data$PREhorm = factor(data$PREhorm, 
+                      levels=c(0,1),
+                      labels=c(&quot;OIL&quot;,&quot;EB&quot;))
+
+data$CHALhorm = factor(data$CHALhorm,
+                      levels=c(0,1),
+                      labels=c(&quot;OIL&quot;,&quot;EB&quot;))
+</code></pre>
+<p>Take a look at the top 6 rows of data:</p>
+<pre><code class="language-r">head(data)
+</code></pre>
+<pre><code>## # A tibble: 6 × 9
+##      ID Sex    Status PREhorm CHALhorm   Hab IND_1 IND_2  CHAL
+##   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;fct&gt;   &lt;fct&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     1 Female OVX    EB      EB       16625 15730 17834 18070
+## 2     2 Female OVX    EB      EB       17097 20482 26562 28665
+## 3     3 Female OVX    OIL     EB       17909 23757 17523 22136
+## 4     4 Female OVX    OIL     EB       14199 11810 13086 11609
+## 5     5 Female OVX    OIL     OIL      21715 23184 27482 26809
+## 6     6 Female OVX    OIL     OIL      14733 19223 23280 23845
+</code></pre>
+<p>Use ggplot in combination with dplyr-style code blocks:</p>
+<pre><code class="language-r">data %&gt;% # take the data, AND THEN
+  select(c(&quot;ID&quot;,&quot;PREhorm&quot;,&quot;Hab&quot;)) %&gt;% # select columns of interest
+  group_by(PREhorm) %&gt;% # Group by between-sub variable
+  summarise(n=n(), # Count the number of individuals per group
+            mean=mean(Hab), # Calculate the mean for each group 
+            sd=sd(Hab))%&gt;% # Calculate sd for each group
+  mutate(se=sd/sqrt(n-1)) %&gt;% # Calculate se for each group
+  ggplot(aes(x=PREhorm,y=mean,colour=PREhorm,fill=PREhorm))+ # base layer ggplot
+  geom_bar(stat=&quot;identity&quot;,alpha=0.2)+ # add bars
+  geom_errorbar(aes(x=PREhorm,ymin=mean-se,ymax=mean+se), # add error bars (se)
+                width=0.5,alpha=0.8)+
+  scale_colour_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+ # select colours
+  scale_fill_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+
+  theme_classic()+ # adjust theme
+  theme(legend.position = &quot;none&quot;)+ # remove useless legend
+  theme(plot.title = element_text(hjust=0.5))+ # center title
+  ylim(0,35000)+ # limits of the y-axis
+  labs(y=&quot;distance travelled (cm)&quot;, # chart labels 
+       x=&quot;&quot;,
+       title=&quot;Distance Travelled on the Habituation Day&quot;)+
+  geom_jitter(data=data, # Add individual points
+              aes(x=PREhorm,y=Hab,shape=PREhorm,colour=PREhorm),
+              width=0.15,size=5,alpha=0.5)
+</code></pre>
+<img src="/2023/02/22/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<p>Adjusting / writing over a few aspects of the code would allow for exploration of various approaches to data visualization.</p>
+<pre><code class="language-r">data %&gt;% # take the data, AND THEN
+  select(c(&quot;ID&quot;,&quot;PREhorm&quot;,&quot;Hab&quot;,&quot;CHAL&quot;)) %&gt;% # select columns of interest
+  melt(id.vars=c(&quot;ID&quot;,&quot;PREhorm&quot;)) %&gt;% # Switch data to long form
+  group_by(PREhorm,variable) %&gt;% # Group by between-sub variable
+  summarise(n=n(), # Count the number of individuals per group
+            mean=mean(value), # Calculate the mean for each group 
+            sd=sd(value))%&gt;% # Calculate sd for each group
+  mutate(se=sd/sqrt(n-1)) %&gt;%
+  ggplot(aes(x=variable,y=mean,colour=PREhorm,shape=PREhorm,group=PREhorm))+
+  geom_point(size=5,alpha=0.8)+
+  geom_line(size=2, alpha=0.8)+
+  geom_errorbar(aes(x=variable,ymin=mean-se,ymax=mean+se),size=2,width=0.5,alpha=0.8)+
+  scale_colour_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+ # select colours
+  theme_classic()+ # adjust theme
+  theme(legend.position = c(0,1),legend.justification = c(0,1))+ # remove useless legend
+  theme(plot.title = element_text(hjust=0.5))+ # center title
+  ylim(10000,30000)+
+  labs(y=&quot;distance travelled (cm)&quot;,
+       x=&quot;&quot;,
+       title=&quot;Change in Distance Travelled Between \n Habituation and Challenge Day&quot;)
+</code></pre>
+<img src="/2023/02/22/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<p>Using dplyr-style code blocks is the quickest way to generate in-line charts while exploring a dataset in R. to save a copy of the ggplot, assign the output of the code chunk to an object, then use ggsave to save the object as a png image:</p>
+<pre><code class="language-r">a &lt;- data %&gt;% # take the data, AND THEN
+  select(c(&quot;ID&quot;,&quot;PREhorm&quot;,&quot;Hab&quot;,&quot;CHAL&quot;)) %&gt;% # select columns of interest
+  melt(id.vars=c(&quot;ID&quot;,&quot;PREhorm&quot;)) %&gt;% # Switch data to long form
+  group_by(PREhorm,variable) %&gt;% # Group by between-sub variable
+  summarise(n=n(), # Count the number of individuals per group
+            mean=mean(value), # Calculate the mean for each group 
+            sd=sd(value))%&gt;% # Calculate sd for each group
+  mutate(se=sd/sqrt(n-1)) %&gt;%
+  ggplot(aes(x=variable,y=mean,colour=PREhorm,shape=PREhorm,group=PREhorm))+
+  geom_point(size=5,alpha=0.8)+
+  geom_line(size=2, alpha=0.8)+
+  geom_errorbar(aes(x=variable,ymin=mean-se,ymax=mean+se),size=2,width=0.5,alpha=0.8)+
+  scale_colour_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+ # select colours
+  theme_classic()+ # adjust theme
+  theme(legend.position = c(0,1),legend.justification = c(0,1))+ # remove useless legend
+  theme(plot.title = element_text(hjust=0.5))+ # center title
+  ylim(10000,30000)+
+  labs(y=&quot;distance travelled (cm)&quot;,
+       x=&quot;&quot;,
+       title=&quot;Change in Distance Travelled Between \n Habituation and Challenge Day&quot;)
+
+# Save the image 4in tall by 4in wide, high quality (dpi=300)
+ggsave(&quot;example_image.png&quot;,a,height=4,width=4,dpi=300)
+</code></pre>
+<p>The high-quality image will save the the working directory (the folder where your project is). To call back the .png image, use the knitr function (loaded with the tidyverse package):</p>
+<pre><code class="language-r">knitr::include_graphics(&quot;example_image.png&quot;)
+</code></pre>
+<img src="example_image.png" width="600" />
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

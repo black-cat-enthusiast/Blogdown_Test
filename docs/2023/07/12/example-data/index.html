@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.115.2">
+
+
+<title>Example Data - A Hugo website</title>
+<meta property="og:title" content="Example Data - A Hugo website">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">Github</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">2 min read</span>
+    
+
+    <h1 class="article-title">Example Data</h1>
+
+    
+    <span class="article-date">2023-07-12</span>
+    
+
+    <div class="article-content">
+      <h1 id="example-data">Example Data</h1>
+<p>There are many available open-source datasets that can be used to explore the unlimited functionality of data analysis in R.</p>
+<p>I will use data from my <a href="https://dr.library.brocku.ca/handle/10464/14553?show=full">MA thesis</a> to explore basic graphing and data analysis in R.</p>
+<p>These data are also <a href="https://pubmed.ncbi.nlm.nih.gov/33130925/">Published</a> in a peer-reviewed journal.</p>
+<h1 id="methods">Methods</h1>
+<ul>
+<li>On each of the 4 days of testing, rats completed a 1hr long open field test (run around empty box - 64cm * 64cm).</li>
+</ul>
+<img src="Nic_Paradigm.png" width="1110" />
+<ul>
+<li>Hab: Habituation session (no drug)</li>
+<li>IND_1: Induction 1 - day after Hab (0.4 mg / kg nicotine)</li>
+<li>IND_2: Induction 2 - day after IND_1 (0.4 mg / kg nicotine)</li>
+<li>CHAL: Challenge day. - 9 days after IND_2 (0.4 mg / kg nicotine)</li>
+</ul>
+<p>Distance traveled (cm) by each rat during the open field test was captured by an overhead camera and auto-scored by a program called SMART.</p>
+<h4 id="the-basis-of-this-paradigm-is-that-rats-will-increase-their-locomotor-output-during-repeated-administrations-of-nicotine-ie-will-exhibit-locomotor-sensitization-to-repeated-nicotine-injections"><em>The basis of this paradigm is that rats will increase their locomotor output during repeated administrations of nicotine (i.e. will exhibit locomotor sensitization to repeated nicotine injections).</em></h4>
+<ul>
+<li>
+<p>N = 47 adult female <a href="https://en.wikipedia.org/wiki/Oophorectomy">Ovariectomized (OVX)</a> rats.</p>
+<ul>
+<li><em>Because all the rats are OVX, they are considered to be estrogen-depleted</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Main experimental manipulation</strong>: Administered 5ug estradiol benzoate (synthetic exogenous estrogen; EB) 30 minutes before nicotine injection:</p>
+<ul>
+<li>On both induction days (n = 12)</li>
+<li>On the challenge day (n = 12)</li>
+<li>At both timepoints (n = 12)</li>
+<li>At neither timepoint (Control, n = 11)</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-r">library(tidyverse) # Load the tidyverse
+data &lt;- read_csv(&quot;EB_Rats_Nicotine_Sensitization.csv&quot;) # Call data
+</code></pre>
+<pre><code class="language-r">head(data) # Show me the top 6 rows of the data
+</code></pre>
+<pre><code>## # A tibble: 6 × 9
+##      ID Sex    Status PREhorm CHALhorm   Hab IND_1 IND_2  CHAL
+##   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     1 Female OVX          1        1 16625 15730 17834 18070
+## 2     2 Female OVX          1        1 17097 20482 26562 28665
+## 3     3 Female OVX          0        1 17909 23757 17523 22136
+## 4     4 Female OVX          0        1 14199 11810 13086 11609
+## 5     5 Female OVX          0        0 21715 23184 27482 26809
+## 6     6 Female OVX          0        0 14733 19223 23280 23845
+</code></pre>
+<p>Data organized in the format <strong>one subject one row</strong> (golden rule of data organization).</p>
+<h1 id="published-result">Published Result</h1>
+<p>Graph made using excel, before I knew how to use R.. :')</p>
+<img src="EB_Nic_Published_Result.png" width="60%" style="display: block; margin: auto;" />
+<ul>
+<li>Many interesting effects in this data!</li>
+<li>Can approach analysis using the GLM in a variety of ways.</li>
+<li>Feel free to explore SPSS and / or R using this dataset.</li>
+</ul>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

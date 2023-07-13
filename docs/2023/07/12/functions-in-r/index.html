@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.115.2">
+
+
+<title>Functions in R - A Hugo website</title>
+<meta property="og:title" content="Functions in R - A Hugo website">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">Github</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">4 min read</span>
+    
+
+    <h1 class="article-title">Functions in R</h1>
+
+    
+    <span class="article-date">2023-07-12</span>
+    
+
+    <div class="article-content">
+      <h1 id="utility-of-functions-in-r">Utility of functions in R</h1>
+<ul>
+<li>Any process that you find you want to carry out repeatedly can be made into a function</li>
+<li>In fact, you <em>should</em> make repetitive processes into functions</li>
+</ul>
+<h1 id="dry-vs-wet-code">DRY vs WET Code</h1>
+<ul>
+<li>
+<p>Both acronyms</p>
+</li>
+<li>
+<p><strong>DRY - &ldquo;Don&rsquo;t Repeat Yourself&rdquo;</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>DRY (“Don&rsquo;t Repeat Yourself”) principle follows the idea of every logic duplication being eliminated by abstraction. This means that during the development process we should avoid writing repetitive duplicated code as much as possible. This principle can easily be implemented in any programming language</p>
+</blockquote>
+<ul>
+<li>Instead of reating chunks of code over and over, turn that chunk of code into a <em>function</em> to keep the code dry.</li>
+</ul>
+<p><strong>WET - &ldquo;Write Evrything Twice&rdquo;, &ldquo;We Enjoy Typing&rdquo;, &ldquo;Waste Everyone&rsquo;s Time&rdquo;</strong></p>
+<ul>
+<li>WET code does have some specific utility - especially when producing carefully curated final panels for publication that include chart-specific annotations and significance indicators.</li>
+</ul>
+<h1 id="simple-example-of-a-functions-in-r">Simple example of a functions in R</h1>
+<pre><code class="language-r">my_awesome_function &lt;- function(Input){
+  a &lt;- Input
+  b &lt;- a / 10
+  print(b)
+}
+</code></pre>
+<ul>
+<li>Assign a name to the new function</li>
+<li>Assign some number of &ldquo;inputs&rdquo; (you may name them anything)</li>
+<li>List a set of processes inside curly brackets</li>
+<li>Include a print() command at the end, if you want your new function what to return something (e.g. a chart or a statistic table)</li>
+</ul>
+<h3 id="example">Example:</h3>
+<pre><code class="language-r">my_value &lt;- 100 
+my_awesome_function(my_value) # Pass &quot;my_value&quot; to my_awesome_function
+</code></pre>
+<pre><code>## [1] 10
+</code></pre>
+<p>Here, the function returned the value of 10 because it divided the input (100) by 10.</p>
+<h3 id="custom-functions-can-be-scaled-to-execute-extremely-comples-processes-eg-graphs--stats-and-functions-can-be-compounded-functions-inside-of-functions">Custom functions can be scaled to execute extremely comples processes (e.g. graphs &amp; stats), and functions can be compounded (functions inside of functions).</h3>
+<h1 id="complex-example-of-a-functions-in-r">Complex example of a functions in R</h1>
+<p><em>Problem: the code for a custom ggplot becomes long and cumbersome. When generating a bunch of identical ggplots on different variables, the code becomes convoluted and difficult to navigate.</em></p>
+<h3 id="solution-generate-a-custom-function-to-create-the-specified-graph-then-pass-each-of-the-variables-to-the-function">Solution: Generate a custom function to create the specified graph, then pass each of the variables to the function:</h3>
+<pre><code class="language-r">library(reshape2) # Load packages
+library(tidyverse)
+library(ggpubr)
+
+data &lt;- read_csv(&quot;EB_Rats_Nicotine_Sensitization.csv&quot;) # get data
+
+data$PREhorm = factor(data$PREhorm, # Factorize between subjects variable.
+                      levels=c(0,1),
+                      labels=c(&quot;OIL&quot;,&quot;EB&quot;))
+</code></pre>
+<h1 id="wrangle-data">Wrangle data</h1>
+<pre><code class="language-r">a &lt;- data %&gt;% # take &quot;data&quot; AND THEN
+  select(c(&quot;ID&quot;,&quot;PREhorm&quot;)) # select columns of interest
+
+Hab &lt;- a # assign &quot;a&quot; to a new df named &quot;Hab&quot;
+Hab$distance &lt;- data$Hab # attach a column named &quot;distance&quot;, containing Hab values from data df. 
+IND_1 &lt;- a # Repeat for the other 3 days of testing 
+IND_1$distance &lt;- data$IND_1 
+IND_2 &lt;- a
+IND_2$distance &lt;- data$IND_2 
+CHAL &lt;- a
+CHAL$distance &lt;- data$CHAL 
+rm(a) # Remove the dummy variable a to maintain a clean working environment. 
+</code></pre>
+<h1 id="define-bar-graph-function">Define bar graph function</h1>
+<pre><code class="language-r">bar_graph_function &lt;- function(Input,Input_2,title){
+  
+n &lt;- Input %&gt;% # take the first input AND THEN
+  group_by(PREhorm) %&gt;% # group by btw-sub variable
+  summarise(n=n()) # count # of individuals (n)
+
+means &lt;- Input %&gt;% # take the first input AND THEN
+  group_by(PREhorm) %&gt;% # group by btw-sub variable
+  summarise(mean=mean(distance)) # calculate mean distance
+
+sd &lt;- Input %&gt;% # take the first input AND THEN
+  group_by(PREhorm) %&gt;% # group by btw-sub variable
+  summarise(mean=sd(distance))  # calculate standard deviation
+
+se &lt;- sd[-1] # remove ID column for next step :)
+se &lt;- se / sqrt(n$n-1) # Calculate standard error
+
+m_means &lt;- melt(means) # switch to long form
+m_se &lt;- melt(se) # switch to long form
+m_means$se &lt;- m_se$value # Attach se column to &quot;m_means&quot; df
+
+a &lt;- ggplot(m_means, aes(x=PREhorm,y=value,colour=PREhorm, shape=PREhorm, fill=PREhorm))+
+    geom_bar(stat=&quot;identity&quot;, alpha=0.2,size=0.8)+
+    geom_errorbar(aes(x=PREhorm,ymin=value-se,ymax=value+se), width=0.4, size=0.8, alpha=0.8)+
+    scale_colour_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+
+    scale_fill_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+
+    theme_classic()+
+    theme(legend.position = &quot;none&quot;)+ # remove useless legend
+    theme(plot.title = element_text(hjust=0.5))+
+    theme(axis.text.x = element_text(colour=&quot;black&quot;))+
+    theme(axis.text.y = element_text(colour = &quot;black&quot;))+
+    theme(axis.title.x = element_text(colour= &quot;black&quot;))+
+    theme(axis.title.y = element_text(colour = &quot;black&quot;))+
+    labs(x=&quot;&quot;,
+         y=&quot;Distance Travelled (cm)&quot;,
+         title=title)+
+    ylim(0,40000)
+
+b &lt;- a +
+  geom_jitter(data=data, aes(x=PREhorm,y=Input_2), size=4,alpha=0.2, width=0.1)
+
+return(b)
+}
+</code></pre>
+<h1 id="use-bar_graph_function">Use bar_graph_function</h1>
+<pre><code class="language-r">A &lt;- bar_graph_function(Hab,data$Hab,&quot;Habituation Day&quot;)
+B &lt;- bar_graph_function(IND_1, data$IND_1, &quot;Induction 1&quot;)
+C &lt;- bar_graph_function(IND_2, data$IND_2, &quot;Induction 2&quot;)
+D &lt;- bar_graph_function(CHAL, data$CHAL, &quot;Challenge Day&quot;)
+
+# Check out the 4 graphs
+A 
+</code></pre>
+<img src="/2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<pre><code class="language-r">B
+</code></pre>
+<img src="/2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-2.png" width="672" />
+<pre><code class="language-r">C
+</code></pre>
+<img src="/2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-3.png" width="672" />
+<pre><code class="language-r">D
+</code></pre>
+<img src="/2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-6-4.png" width="672" />
+<h1 id="create-panel">Create Panel</h1>
+<p>Arrange the 4 ggplots made with the function into a panel to see the data side-by-side.</p>
+<pre><code class="language-r">EB_panel &lt;- ggarrange(A,B,C,D,
+          ncol=4,nrow=1,
+          labels = c(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;),
+          common.legend = TRUE)
+
+EB_panel
+</code></pre>
+<img src="/2023/07/12/functions-in-r/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<p>To generate a more high-quality version of the panel, save it as a .png image with dpi=300, then call back the .png.</p>
+<ul>
+<li>This approach also allows for control of the dimensions of the image (in inches):</li>
+</ul>
+<pre><code class="language-r">ggsave(&quot;EB_panel.png&quot;,EB_panel,height=4,width=9,dpi=300)
+
+knitr::include_graphics(&quot;EB_panel.png&quot;)
+</code></pre>
+<img src="EB_panel.png" width="1350" />
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
