@@ -77,7 +77,9 @@ e.g. match all the axes across a multi-panel figure. 3. Ease of sharing methods 
       <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
       
       <guid>/about/</guid>
-      <description>This is a navigational base for Purple Monkey Dishwasher content related to data vizualization and analysis using reproduceable (code-based) approaches in R. The codes for each of the pages can be found on Github. Content and website prepared for the lovely graduate students of the Martin Pain Lab by Jennet Baumbach.</description>
+      <description>This is a navigational base for content related to data vizualization and analysis using reproduceable (code-based) approaches in R.
+The codes to reproduce each of the pages are publically available on Github.
+Content and website prepared for the lovely graduate students of the Martin Pain Lab by Jennet Baumbach.</description>
     </item>
     
   </channel>
