@@ -77,7 +77,7 @@ e.g. match all the axes across a multi-panel figure. 3. Ease of sharing methods 
       <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
       
       <guid>/about/</guid>
-      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie.</description>
+      <description>This is a navigational base for Purple Monkey Dishwasher content related to data vizualization and analysis using reproduceable (code-based) approaches in R. The codes for each of the pages can be found on Github. Content and website prepared for the lovely graduate students of the Martin Pain Lab by Jennet Baumbach.</description>
     </item>
     
   </channel>
