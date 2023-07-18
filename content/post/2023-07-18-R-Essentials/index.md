@@ -11,12 +11,15 @@ output:
 
 **Do This** (**to that**, *with some stipulations*)
 
-- Coding skills come from the ability to navigate and solve novel problems. 
+# Developing proficiency in R
+
+- Learning to read & write code really is like learning a language. 
+- Coding skills come from the ability to navigate and solve novel problems.
 - Google is your best friend when working towards solving R issues.
 - Getting good at googling is a skill in and of itself.
-- The more specific you can be (e.g. specify "R", the package you are using or the specific command.)
+    + The more specific you can be with the search terms, the better your chances of finding relevant search results (e.g. specify "R", the package you are using or the specific command).
 
-# Some Cheat Sheets 
+# Cheat Sheets 
 
 - Navigating the integrated development environment [aka the IDE](https://ucdavis-bioinformatics-training.github.io/Oct2017-ILRI-Workshop/Cheat_Sheets/rstudio-IDE-cheatsheet.pdf)
 
