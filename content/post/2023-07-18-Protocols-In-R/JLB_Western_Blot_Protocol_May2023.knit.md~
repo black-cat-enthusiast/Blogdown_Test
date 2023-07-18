@@ -1,0 +1,58 @@
+---
+title: "JLB_Westerns_Protocol"
+author: "JLB"
+date: '2023-05-09'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+
+# Background
+
+- Western blotting allows for rapid semi-quantitative analysis of relative levels of a protein (s) of interest in a set of samples. 
+- Adaptation of the theory used to "blot" RNA (Northern Blotting) and DNA (southern blotting) for protein. 
+- Samples are pulled through a gel via electrophoresis to sort them by size. 
+- Separated protiens are transferred onto a peice of "membrane" paper, where antibody-based detection can be used to probe protein concentrations. 
+
+# Tissue Collection
+
+Western blotting can be used for protein detection in a variety of sample types (e.g. blood), but typically brain tissue is used in neuroscience applications. Fresh brain tissue should be snap-frozen either via isopentane on dry ice or liquid nitrogen. Perfused brain tissue cannot be used for western blotting because perfusion 'fixes' proteins in their [quatrinary formations](https://en.wikipedia.org/wiki/Protein_quaternary_structure), meaning that they cannot be denatured.
+
+- Prepare 1in*1in pieces of tin foil with animal IDs written on both sides in sharpie for tissue collection. 
+- Chill ~50 ml of isopentane on dry ice for >10 mins before beginning. 
+- Fill the isopentane beaker right up to the top to avoid fresh tissue touching cold glass. If brains touch the frozen walls of the beaker they will stick.
+- Store snap-frozen brains wrapped in tin foils at -80 until the time of sample processing. 
+- Isopentane can be stored in the fridge and re-used until it disappears (evaporates at room temperature).
+
+# Dissection 
+
+*The process that you will follow to dissect region(s) of interest will depend on your specific experimental parameters*
+
+- Thaw brains one at a time in a 50ml beaker of aCSF / PBS on ice. 
+- At first, brains will float. They will be thawed enough to dissect soon after they sink. 
+- Lift brains out carefully with a spoon, and dissect on a glass petrie dish covered with moistened filter paper. 
+- Re-freeze samples in individually labelled tubes on dry ice. 
+- Store samples in a Styrofoam container filled with dry ice while working and at -80 until the time of tissue processing. 
+
+# A "graphical abstract" of the Western Blotting Process:
+
+*(borrowed from the [Wikipedia page on Western Blotting](https://en.wikipedia.org/wiki/Western_blot), which has tons of useful info):*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
