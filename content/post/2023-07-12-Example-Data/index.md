@@ -37,7 +37,10 @@ Distance traveled (cm) by each rat during the open field test was captured by an
   + On the challenge day (n = 12)
   + At both timepoints (n = 12)
   + At neither timepoint (Control, n = 11)
+  
+### [Link to raw data](https://github.com/black-cat-enthusiast/Blogdown_Test/blob/master/content/post/2023-07-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
 
+# Load Data in R
 
 ```r
 library(tidyverse) # Load the tidyverse
