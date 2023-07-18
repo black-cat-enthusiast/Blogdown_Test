@@ -31,6 +31,15 @@ DRY (“Don&amp;rsquo;t Repeat Yourself”) principle follows the idea of every 
     </item>
     
     <item>
+      <title>Codes to Create Basic Graphs Using ggplot2</title>
+      <link>/2023/04/05/codes-to-create-basic-graphs-using-ggplot2/</link>
+      <pubDate>Wed, 05 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/2023/04/05/codes-to-create-basic-graphs-using-ggplot2/</guid>
+      <description>First thing&amp;rsquo;s first: Load packages library(tidyverse)library(reshape2)library(ggpubr)library(readr)Get Data: EB Rats (data from my MA thesis - published here) data &amp;lt;- read_csv(&amp;quot;EB_Rats_Nicotine_Sensitization.csv&amp;quot;)data$PREhorm = factor(data$PREhorm,# change the PREhorm variable to a factorlevels = c(0,1), # With two levels, 0 and 1 (ordered)labels = c(&amp;quot;OIL&amp;quot;,&amp;quot;EB&amp;quot;)) # And label those levels, the condition names.data$CHALhorm = factor(data$CHALhorm, # change the PREhorm variable to a factorlevels = c(0,1),labels = c(&amp;quot;OIL&amp;quot;,&amp;quot;EB&amp;quot;))Bar chart with error bars: a &amp;lt;- as.</description>
+    </item>
+    
+    <item>
       <title>Introduction to ggplot2</title>
       <link>/2023/02/22/introduction-to-ggplot2/</link>
       <pubDate>Wed, 22 Feb 2023 21:13:14 -0500</pubDate>

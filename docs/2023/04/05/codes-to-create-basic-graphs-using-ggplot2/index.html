@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.115.2">
+
+
+<title>Codes to Create Basic Graphs Using ggplot2 - A Hugo website</title>
+<meta property="og:title" content="Codes to Create Basic Graphs Using ggplot2 - A Hugo website">
+
+
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">Github</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">4 min read</span>
+    
+
+    <h1 class="article-title">Codes to Create Basic Graphs Using ggplot2</h1>
+
+    
+    <span class="article-date">2023-04-05</span>
+    
+
+    <div class="article-content">
+      <h1 id="first-things-first-load-packages">First thing&rsquo;s first: Load packages</h1>
+<pre><code class="language-r">library(tidyverse)
+library(reshape2)
+library(ggpubr)
+library(readr)
+</code></pre>
+<h1 id="get-data-eb-rats-data-from-my-ma-thesis---published-herehttpslinkspringercomarticle101007s00213-020-05685-8">Get Data: EB Rats (data from my MA thesis - published <a href="https://link.springer.com/article/10.1007/s00213-020-05685-8">here</a>)</h1>
+<pre><code class="language-r">data &lt;- read_csv(&quot;EB_Rats_Nicotine_Sensitization.csv&quot;)
+
+data$PREhorm = factor(data$PREhorm,# change the PREhorm variable to a factor
+                      levels = c(0,1), # With two levels, 0 and 1 (ordered)
+                      labels = c(&quot;OIL&quot;,&quot;EB&quot;)) # And label those levels, the condition names.
+
+data$CHALhorm = factor(data$CHALhorm, # change the PREhorm variable to a factor
+                      levels = c(0,1),
+                      labels = c(&quot;OIL&quot;,&quot;EB&quot;))
+</code></pre>
+<h1 id="bar-chart-with-error-bars">Bar chart with error bars:</h1>
+<pre><code class="language-r">a &lt;- as.data.frame(data$ID) # Create temp df
+a$PREhorm &lt;- data$PREhorm # Attach hormone variables
+a$CHALhorm &lt;- data$CHALhorm 
+colnames(a) &lt;- c(&quot;ID&quot;,&quot;PREhorm&quot;,&quot;CHALhorm&quot;) # name them
+
+CHAL &lt;- a
+CHAL$distance &lt;- data$CHAL
+
+n &lt;- CHAL %&gt;% # Get info about Input's n
+  group_by(`PREhorm`) %&gt;%
+  summarise(n=n())
+
+means &lt;- CHAL %&gt;% # Get info about Input's mean distance value
+  group_by(PREhorm) %&gt;%
+  summarise(mean=mean(distance))
+
+sd &lt;- CHAL %&gt;% # Get sd info
+  group_by(PREhorm) %&gt;%
+  summarise(sd=sd(distance))
+
+se &lt;- sd[-1] # Drop the ID column, because it's problematic in the nest step and is not longer needed.
+se &lt;- se / sqrt(n$n-1) # calculate standard error
+
+m_means &lt;- melt(means) # Get data to ggplot format
+m_se &lt;- melt(se)
+m_means$se &lt;- m_se$value # Bind se values to the means df.
+
+a &lt;- ggplot(m_means, aes(x=PREhorm,y=value,colour=PREhorm,fill=PREhorm))+ # Create bar chart 
+  geom_bar(stat = &quot;identity&quot;, alpha=0.2)+
+  geom_errorbar(aes(x=PREhorm,ymin=value-se,ymax=value+se), width=0.4, size=0.8,alpha=0.8)+
+  scale_colour_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+
+  scale_fill_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+
+  theme_classic()+
+  theme(legend.position = &quot;none&quot;)+
+  theme(plot.title = element_text(hjust=0.5))+
+  theme(plot.subtitle = element_text(hjust=0.5))+
+  labs(
+    x=&quot; &quot;,
+    y=&quot;distance travelled (cm)&quot;,
+    title = &quot;Bar chart with Error Bars&quot;,
+    subtitle = &quot;Useful to show a between-group effect&quot;
+  )+
+  ylim(0,40000)
+
+a # Check out the result
+</code></pre>
+<img src="../../../../2023/04/05/codes-to-create-basic-graphs-using-ggplot2/index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<h1 id="add-individual-points">Add individual points</h1>
+<pre><code class="language-r">a + 
+  geom_jitter(data=data,aes(x=PREhorm,y=CHAL,shape=PREhorm),size=4,alpha=0.4,width=0.25) 
+</code></pre>
+<img src="../../../../2023/04/05/codes-to-create-basic-graphs-using-ggplot2/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<h1 id="bar-chart-with-lines-for-within-subjects-data">Bar Chart with Lines for within-subjects data</h1>
+<pre><code class="language-r">lines_data &lt;- data[ ,1:7]
+lines_data &lt;- lines_data[-2]
+lines_data &lt;- lines_data[-2]
+
+n &lt;- lines_data %&gt;% # Get info about Input's n
+  summarise(n=n())
+
+means &lt;- lines_data %&gt;% # Get info about Input's mean distance value
+  summarise_at(vars(Hab:IND_1),mean) 
+
+sd &lt;- lines_data %&gt;% # Get sd info
+  summarise_at(vars(Hab:IND_1),&quot;sd&quot;)
+
+se &lt;- sd[-1] # Drop the ID column, because it's problematic in the nest step and is not longer needed.
+se &lt;- se / sqrt(n$n-1) # calculate standard error
+
+m_means &lt;- melt(means) # Get data to ggplot format
+m_se &lt;- melt(se)
+m_means$se &lt;- m_se$value # Bind se values to the means df.
+
+m_lines_data &lt;- melt(lines_data, id.vars=c(&quot;ID&quot;,&quot;PREhorm&quot;,&quot;CHALhorm&quot;))
+
+a &lt;- ggplot(m_means, aes(x=variable,y=value))+
+  geom_bar(stat=&quot;identity&quot;, alpha=0.2,colour=&quot;black&quot;,fill=&quot;black&quot;,size=1)+
+  geom_errorbar(aes(ymin=value-se,ymax=value+se),size=1,width=0.25, alpha=0.8,colour=&quot;black&quot;)+
+  theme_classic()+
+  theme(legend.position = c(0,1), legend.justification = c(0,1))+
+  theme(plot.title = element_text(hjust=0.5))+
+  theme(plot.subtitle = element_text(hjust=0.5))+
+  labs(x=&quot;&quot;,
+       y=&quot;Distance Travelled (cm)&quot;,
+       title=&quot;Bar chart with individual lines&quot;,
+       subtitle = &quot;Shows within-subjects effect across time&quot;)
+
+a + geom_line(data=m_lines_data, aes(x=variable,y=value,group=ID),alpha=0.8,size=1)
+</code></pre>
+<img src="../../../../2023/04/05/codes-to-create-basic-graphs-using-ggplot2/index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<pre><code class="language-r">a + geom_line(data=m_lines_data, aes(x=variable,y=value,group=ID,colour=PREhorm),alpha=0.8,size=1)+
+    scale_colour_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))
+</code></pre>
+<img src="../../../../2023/04/05/codes-to-create-basic-graphs-using-ggplot2/index_files/figure-html/unnamed-chunk-5-2.png" width="672" />
+<h1 id="special-request-from-crystal">Special Request from Crystal</h1>
+<pre><code class="language-r">a &lt;- data[,1:2]
+a$PREhorm &lt;- data$PREhorm
+a &lt;- a[-2]
+b &lt;- data[,8:9]
+c &lt;- cbind(a,b)
+
+n &lt;- data %&gt;%
+  group_by (PREhorm) %&gt;%
+  summarise(n=n())
+
+means &lt;- data %&gt;%
+  group_by(PREhorm) %&gt;%
+  summarise_at(vars(IND_2:CHAL),&quot;mean&quot;)
+
+sds &lt;- data %&gt;%
+  group_by(PREhorm) %&gt;%
+  summarise_at(vars(IND_1:IND_2),&quot;sd&quot;)
+
+se &lt;- sds [,-1]
+se &lt;- se / sqrt(n$n-1)
+
+m_means &lt;- melt(means)
+m_se &lt;- melt(se)
+m_means$se &lt;- m_se$value
+
+a &lt;- ggplot(m_means,aes(x=variable,y=value,colour=PREhorm,fill=PREhorm))+
+  scale_colour_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+
+  scale_fill_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+
+  geom_bar(stat=&quot;identity&quot;,alpha=0.2,size=1)+
+  geom_errorbar(aes(x=variable,ymin=value-se,ymax=value+se),size=1,width=0.25)+
+  theme_classic()+
+  facet_wrap(~PREhorm)
+
+lines_data &lt;- data[ ,1:5]
+lines_data &lt;- lines_data[-2]
+lines_data &lt;- lines_data[-2]
+lines_data$IND_2 &lt;- data$IND_2
+lines_data$CHAL &lt;- data$CHAL
+m_lines_data &lt;- melt(lines_data, id.vars=c(&quot;ID&quot;,&quot;PREhorm&quot;,&quot;CHALhorm&quot;))
+
+b &lt;- a + 
+  geom_line(data=m_lines_data, aes(x=variable,y=value,group=ID,colour=PREhorm),alpha=0.8,size=1)+
+  theme(plot.title = element_text(hjust=0.5))+
+  theme(legend.position = &quot;none&quot;)+
+  labs(title=&quot;EB during induction enables expression of sensitization&quot;,
+       x=&quot; &quot;,
+       y=&quot;Distance Travelled (cm)&quot;)
+
+ggsave(&quot;wi_CHAL.png&quot;,b,dpi=300,height=4,width=7)
+</code></pre>
+<h1 id="line-chart-acrss-days-to-show-within-subjects-data">Line chart acrss days to show within subjects data</h1>
+<pre><code class="language-r">data2 &lt;- data
+data2 &lt;- data2[-2]
+data2 &lt;- data2[-2]
+m_data &lt;- melt(data, id.vars=c(&quot;ID&quot;,&quot;PREhorm&quot;,&quot;CHALhorm&quot;))
+
+n &lt;- data %&gt;% # Get info about Input's n
+  group_by(`PREhorm`,`CHALhorm`)%&gt;%
+  summarise(n=n())
+
+means &lt;- data %&gt;% # Get info about Input's mean distance value
+  group_by(`PREhorm`,`CHALhorm`)%&gt;%
+  summarise_at(vars(Hab:CHAL),mean) 
+
+sd &lt;- data %&gt;% # Get sd info
+  group_by(`PREhorm`,`CHALhorm`)%&gt;%
+  summarise_at(vars(Hab:CHAL),&quot;sd&quot;)
+
+se &lt;- sd[-1] # Drop the ID column, because it's problematic in the nest step and is not longer needed.
+se &lt;- se[-1]
+se &lt;- se / sqrt(n$n-1) # calculate standard error
+
+m_means &lt;- melt(means,id.vars=c(&quot;PREhorm&quot;,&quot;CHALhorm&quot;)) # Get data to ggplot format
+m_se &lt;- melt(se)
+m_means$se &lt;- m_se$value # Bind se values to the means df.
+m_means$group &lt;- c(1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4)
+
+a &lt;- ggplot(m_means,aes(x=variable,y=value,colour=PREhorm,shape=CHALhorm,group=group))+
+  geom_point(size=5,alpha=0.8)+
+  geom_line(size=2,alpha=0.8)+
+  scale_colour_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+
+  geom_errorbar(aes(x=variable,ymin=value-se,ymax=value+se),size=2,width=0.25,alpah=0.8)+
+  theme_classic()+
+  theme(plot.title = element_text(hjust=0.5))+
+  theme(plot.subtitle = element_text(hjust=0.5))+
+  theme(legend.position = c(0,1), legend.justification = c(0,1))+
+  labs(x=&quot;&quot;,
+       y=&quot;Distance Travelled (cm)&quot;,
+       title= &quot;Line chart with means and error bars (SE)&quot;,
+       subtitle=&quot;To show changes in group means across time&quot;)
+
+a 
+</code></pre>
+<img src="../../../../2023/04/05/codes-to-create-basic-graphs-using-ggplot2/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<h1 id="line-chart-plus-individual-points">Line chart plus individual points</h1>
+<pre><code class="language-r">data2 &lt;- data 
+data2 &lt;- data2[-2]
+data2 &lt;- data2[-2]
+data2$group &lt;- 0
+
+data2 &lt;- data2 %&gt;%
+  mutate(group = case_when(
+    data2$PREhorm == &quot;OIL&quot; | data2$CHALhorm == &quot;OIL&quot; ~ 1,
+    data2$PREhorm == &quot;EB&quot; | data2$CHALhorm == &quot;OIL&quot; ~ 2,
+    data2$PREhorm == &quot;OIL&quot; | data2$CHALhorm == &quot;EB&quot; ~ 3,
+    data2$PREhorm == &quot;EB&quot; | data2$CHALhorm == &quot;EB&quot; ~4
+  ))
+
+m_data &lt;- melt(data2,id.vars=c(&quot;ID&quot;,&quot;group&quot;,&quot;PREhorm&quot;,&quot;CHALhorm&quot;))
+
+a + 
+  geom_jitter(data=m_data,size=4,alpha=0.5,width=0.25)+
+  labs(
+    subtitle=&quot;Individual points helps showcase the nature of the data&quot;
+  )
+</code></pre>
+<img src="../../../../2023/04/05/codes-to-create-basic-graphs-using-ggplot2/index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<h1 id="line-chart-plus-individual-lines">Line chart plus individual lines</h1>
+<pre><code class="language-r">a + 
+  geom_line(data=m_data, aes(x=variable,y=value,group=ID),alpha=0.5)+
+  labs(
+    subtitle = &quot;Lines showcase individual changes across the paradigm&quot;
+  )
+</code></pre>
+<img src="../../../../2023/04/05/codes-to-create-basic-graphs-using-ggplot2/index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<h1 id="continuous-predictor--continuous-outcome">Continuous predictor + Continuous outcome</h1>
+<pre><code class="language-r">ggplot(data, aes(x=Hab,y=CHAL,colour=PREhorm,shape=PREhorm,fill=PREhorm))+
+  geom_point(size=5,alpha=0.5)+
+  geom_smooth(method=&quot;lm&quot;,alpha=0.2)+
+  scale_colour_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+
+  scale_fill_manual(values=c(&quot;#89CFF0&quot;,&quot;#CD5E77&quot;))+
+  theme_classic()+
+  theme(legend.position = c(0,1), legend.justification = c(0,1))+
+  theme(plot.title = element_text(hjust=0.5))+
+  theme(plot.subtitle = element_text(hjust=0.5))+
+  labs(
+    x=&quot;Distance travelled during the habituation session&quot;,
+    y=&quot;Distance travelled on the challenge day&quot;,
+    title = &quot;Scatterplot with Lines of Best fit added for each group&quot;,
+    subtitle = &quot;Shows the relationship between 2 continuous variables&quot;
+  )
+</code></pre>
+<img src="../../../../2023/04/05/codes-to-create-basic-graphs-using-ggplot2/index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
