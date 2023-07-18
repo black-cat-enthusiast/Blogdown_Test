@@ -288,7 +288,7 @@ knitr::include_graphics("WB_Transfer.png")
 
 **You must have both a target protein and a normalizer protein (loading control) for each membrane**
 
-- In the example below, the intensity of the GR band would be divided by the intesity of the corresponding gapdh band. 
+- In the example below, the intensity of the GR band would be divided by the intensity of the corresponding gapdh band. 
 
 ```{r,WB_Result}
 knitr::include_graphics("Rep_WB.png")
