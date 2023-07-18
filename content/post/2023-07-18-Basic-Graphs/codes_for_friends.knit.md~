@@ -1,0 +1,38 @@
+---
+title: "Codes to Create Basic Graphs Using ggplot2"
+author: "Jennet Baumbach"
+date: "2023-04-05"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+# First thing's first: Load packages
+
+```r
+library(tidyverse)
+library(reshape2)
+library(ggpubr)
+library(readr)
+```
+
+# Get Data: EB Rats (data from my MA thesis - published [here](https://link.springer.com/article/10.1007/s00213-020-05685-8))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
