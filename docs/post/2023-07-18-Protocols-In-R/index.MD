@@ -7,10 +7,7 @@ output:
   pdf_document: default
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = "center",out.width = "70%")
-library(tidyverse)
-```
+
 
 # Background
 
@@ -43,9 +40,7 @@ Western blotting can be used for protein detection in a variety of sample types 
 
 *(borrowed from the [Wikipedia page on Western Blotting](https://en.wikipedia.org/wiki/Western_blot), which has tons of useful info):*
 
-```{r,abstract}
-knitr::include_graphics("Abstract.png")
-```
+<img src="Abstract.png" width="70%" style="display: block; margin: auto;" />
 
 # Tissue Processing 
 
@@ -78,15 +73,7 @@ knitr::include_graphics("Abstract.png")
 
 *Purpose: To measure protein concentrations in each sample* 
 
-```{r,bradford}
-a <- c("Blank","A","B","C","D","E")
-b <- c(0,1,0.5,0.25,0.125,0.0625)
-c <- c(500,500,500,500,500,500)
-d <- c("Nothing","500 STOCK","500 A", "500 B", "500 C", "500D")
 
-bradford <- as.data.frame(cbind(a,b,c,d))
-colnames(bradford) <- c("Label","Protein Concentration","RO to Add", "BSA to Add")
-```
 
 ### Materials
 
@@ -105,9 +92,15 @@ colnames(bradford) <- c("Label","Protein Concentration","RO to Add", "BSA to Add
 - Add 500 ul STOCK BSA to tube A
 - Serial dilute down the line by half: 
 
-```{r,standard, out.width = "50%"}
-knitr::kable(bradford, "simple", align="lccc")
-```
+
+Label    Protein Concentration    RO to Add    BSA to Add 
+------  -----------------------  -----------  ------------
+Blank              0                 500        Nothing   
+A                  1                 500       500 STOCK  
+B                 0.5                500         500 A    
+C                0.25                500         500 B    
+D                0.125               500         500 C    
+E               0.0625               500          500D    
 
 #### Prepare Bradford Samples:
 
@@ -130,9 +123,7 @@ knitr::kable(bradford, "simple", align="lccc")
   + The computer is **slow**, best to set up ahead of time. 
   + Use Gen5 - same as the cytation. 
 
-```{r,bradford_output}
-knitr::include_graphics("Bradford_Assay.png")
-```
+<img src="Bradford_Assay.png" width="70%" style="display: block; margin: auto;" />
 
 # Match Protein Concentrations
 
@@ -159,9 +150,7 @@ Dilute across two steps:
 
 ### Overview of steps to run the western gel: 
 
-```{r,run}
-knitr::include_graphics("WB_Run.png")
-```
+<img src="WB_Run.png" width="70%" style="display: block; margin: auto;" />
 
 ### Step #1: Casting Gels
 
@@ -174,9 +163,7 @@ knitr::include_graphics("WB_Run.png")
   + To make stock: 1 gram APS powder + 10 ml RO -> dissolve and aliquot in 1ml tubes. 
 - 15 mL falcon tubes (2 - label one "resolver" and the other "stacker")
 
-```{r,acrylamide, out.width="75%"}
-knitr::include_graphics("Acrylamide.png")
-```
+<img src="Acrylamide.png" width="75%" style="display: block; margin: auto;" />
 
 **Procedure**
 
@@ -212,9 +199,7 @@ knitr::include_graphics("Acrylamide.png")
 - Failure to match the colours will result in terrible things. 
 - Watch the purple line move through the gel. 
 
-```{r,transfer}
-knitr::include_graphics("WB_Transfer.png")
-```
+<img src="WB_Transfer.png" width="70%" style="display: block; margin: auto;" />
 
 *also see [this informative video](https://www.google.com/search?q=western+blot+transfer&rlz=1C1CHBF_enCA937CA937&oq=western+blot+transfer&aqs=chrome.0.0i512l10.3790j0j7&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:830e2b98,vid:NWiVUXcQxjY) for more info*
 
@@ -290,6 +275,11 @@ knitr::include_graphics("WB_Transfer.png")
 
 - In the example below, the intensity of the GR band would be divided by the intensity of the corresponding gapdh band. 
 
-```{r,WB_Result}
-knitr::include_graphics("Rep_WB.png")
-```
+<img src="Rep_WB.png" width="70%" style="display: block; margin: auto;" />
+
+
+
+
+
+
+
