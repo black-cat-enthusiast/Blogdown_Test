@@ -1,0 +1,106 @@
+---
+title: "JLB_Westerns_Protocol"
+author: "JLB"
+date: '2023-05-09'
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+
+# Background
+
+- Western blotting allows for rapid semi-quantitative analysis of relative levels of a protein (s) of interest in a set of samples. 
+- Adaptation of the theory used to "blot" RNA (Northern Blotting) and DNA (southern blotting) for protein. 
+- Samples are pulled through a gel via electrophoresis to sort them by size. 
+- Separated proteins are transferred onto a peice of "membrane" paper, where antibody-based detection can be used to probe protein concentrations. 
+
+# Tissue Collection
+
+Western blotting can be used for protein detection in a variety of sample types (e.g. blood), but typically brain tissue is used in neuroscience applications. Fresh brain tissue should be snap-frozen either via isopentane on dry ice or liquid nitrogen. Perfused brain tissue cannot be used for western blotting because perfusion 'fixes' proteins in their [quatrinary formations](https://en.wikipedia.org/wiki/Protein_quaternary_structure), meaning that they cannot be denatured.
+
+- Prepare 1in*1in pieces of tin foil with animal IDs written on both sides in sharpie for tissue collection. 
+- Chill ~50 ml of isopentane on dry ice for >10 mins before beginning. 
+- Fill the isopentane beaker right up to the top to avoid fresh tissue touching cold glass. If brains touch the frozen walls of the beaker they will stick.
+- Store snap-frozen brains wrapped in tin foils at -80 until the time of sample processing. 
+- Isopentane can be stored in the fridge and re-used until it disappears (evaporates at room temperature).
+
+# Dissection 
+
+*The process that you will follow to dissect region(s) of interest will depend on your specific experimental parameters*
+
+- Thaw brains one at a time in a 50ml beaker of aCSF / PBS on ice. 
+- At first, brains will float. They will be thawed enough to dissect soon after they sink. 
+- Lift brains out carefully with a spoon, and dissect on a glass petrie dish covered with moistened filter paper. 
+- Re-freeze samples in individually labelled tubes on dry ice. 
+- Store samples in a Styrofoam container filled with dry ice while working and at -80 until the time of tissue processing. 
+
+# A "graphical abstract" of the Western Blotting Process:
+
+*(borrowed from the [Wikipedia page on Western Blotting](https://en.wikipedia.org/wiki/Western_blot), which has tons of useful info):*
+
+<img src="Abstract.png" width="120%" style="display: block; margin: auto;" />
+
+# Tissue Processing 
+
+*Purpose: to break cells open so that all the proteins inside them are "dumped" into a "protein soup"*
+
+-	Must add **inhibitors** to prevent degredation of target proteins by endogenous enzymens in the sample. 
+  + Always add [protease inhibitor](https://www.sigmaaldrich.com/CA/en/product/roche/04693159001) to prevent general protein degredation. 
+  + Add [phosphotase inhibitor](https://www.sigmaaldrich.com/CA/en/product/roche/phossro?gclid=CjwKCAjwge2iBhBBEiwAfXDBR9vTNHUQ_HwzxqfByrqoqjlv4HrcnrupWq7N-Iia4J5mbvGefaBMOxoC1fsQAvD_BwE&gclsrc=aw.ds) if targeting phosphorylated proteins. 
+
+**Basic tissue processing for whole-cell lysates:**
+
+- To Lyse cells, use some combination of salt and soap. Soap will deteriorate the fatty cell membranes (just like it erodes grease in your sink!). 
+- [Pre-purchased RIPA](https://www.sigmaaldrich.com/CA/en/product/mm/20188) buffer is a great lysis buffer option. Only make your own solutions if you need to for some experiment-specific reason. 
+- Dilute RIPA to working concentration before use (stock is 10x - combine 1ml STOCK + 9ml RO).
+  + Add inhibitor tablet(s)! **Very important, don't forget!**
+- Add *"an appropriate volume"* of 1x RIPA buffer (with dissolved inhibitors) to your samples. 
+  + the goal is to create a protein soup that falls in the "goldilocks" (detectable) range - not too concentrated but also not too dilute. 
+  + smaller pieces of tissue should be processed with less lysis buffer. 
+  + JB + AML 2022/2023 ~150ul works perfect for bilateral ACC samples. 
+- Homogenize samples with the automatic tool or by hand with a pipette. 
+  + Goal is to create a relatively homogeneous looking greyish / yellowish mixture. 
+- Centrifuge samples for 20 minutes at MAX (17500 x G). 
+- Collect back 5/6ths of the initial volume of RIPA buffer added, leaving behind the pellet that formed after centrifugation. 
+  + This optional step removes chromatin and other long stringy non-homogenized junk from the samples.
+  + Removing chromatin improves the end result of the Westerns. 
+  
+*Use a more refined tissue processing protocol to separate out sub-cellular compartments*
+  
+# Bradford Assay
+
+*Purpose: To measure protein concentrations in each sample* 
+
+
+
+### Materials
+
+- [96-well plate](https://www.google.com/search?q=96+well+plate&rlz=1C1CHBF_enCA937CA937&sxsrf=APwXEdca6xamRTS2uF8oCBQ4KjZGfmBe6A:1683718459246&source=lnms&tbm=isch&sa=X&sqi=2&ved=2ahUKEwiNxqiF1Or-AhWHpokEHdGrA7kQ_AUoAXoECAIQAw&biw=1058&bih=1059&dpr=1.82) (can clean with ethanol and reuse - doesn't need to be brand new)
+- [Bradford dye](https://www.thermofisher.com/order/catalog/product/23246?gclid=CjwKCAjw3ueiBhBmEiwA4BhspFKHG_-C8hGQrqQTux8BWOggdMTY9Gtqe1Q0K5qwQiVCSJMio_Y2QBoCx04QAvD_BwE&ef_id=CjwKCAjw3ueiBhBmEiwA4BhspFKHG_-C8hGQrqQTux8BWOggdMTY9Gtqe1Q0K5qwQiVCSJMio_Y2QBoCx04QAvD_BwE:G:s&s_kwcid=AL!3652!3!437211904039!!!g!!!10122613083!101638248476&cid=bid_pca_sbu_r01_co_cp1359_pjt0000_bid00000_0se_gaw_dy_pur_con)
+- [Repeater pipette](https://www.eppendorf.com/product-media/doc/en_us/140712/Eppendorf_Liquid-Handling_Brochure_Multipette-E3-E3x_Generation-E.pdf) and [required disposables](https://www.pipettes.com/eppendorf-combitips-advanced-5-0-ml-sterile-individual-wrapped-100-pack)
+- [BSA](https://www.uoftmedstore.com/item_detail.sz?id=25597) at a STOCK concentration of 1 mg / ml to make into a standard
+
+### Procedure
+
+#### Prepare Standard Curve: 
+
+- Label a set of tubes A:E
+- Add 500 ul RO to each
+- Thaw an aliquot of 1 mg/ml BSA (-20 freezer, bottom shelf, left side)
+- Add 500 ul STOCK BSA to tube A
+- Serial dilute down the line by half: 
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -40,7 +40,7 @@ Western blotting can be used for protein detection in a variety of sample types 
 
 *(borrowed from the [Wikipedia page on Western Blotting](https://en.wikipedia.org/wiki/Western_blot), which has tons of useful info):*
 
-<img src="Abstract.png" width="70%" style="display: block; margin: auto;" />
+<img src="Abstract.png" width="120%" style="display: block; margin: auto;" />
 
 # Tissue Processing 
 
@@ -93,14 +93,14 @@ Western blotting can be used for protein detection in a variety of sample types 
 - Serial dilute down the line by half: 
 
 
-Label    Protein Concentration    RO to Add    BSA to Add 
-------  -----------------------  -----------  ------------
-Blank              0                 500        Nothing   
-A                  1                 500       500 STOCK  
-B                 0.5                500         500 A    
-C                0.25                500         500 B    
-D                0.125               500         500 C    
-E               0.0625               500          500D    
+|Label | Protein Concentration | RO to Add | BSA to Add |
+|:-----|:---------------------:|:---------:|:----------:|
+|Blank |           0           |    500    |  Nothing   |
+|A     |           1           |    500    | 500 STOCK  |
+|B     |          0.5          |    500    |   500 A    |
+|C     |         0.25          |    500    |   500 B    |
+|D     |         0.125         |    500    |   500 C    |
+|E     |        0.0625         |    500    |    500D    |
 
 #### Prepare Bradford Samples:
 
@@ -123,7 +123,7 @@ E               0.0625               500          500D
   + The computer is **slow**, best to set up ahead of time. 
   + Use Gen5 - same as the cytation. 
 
-<img src="Bradford_Assay.png" width="70%" style="display: block; margin: auto;" />
+<img src="Bradford_Assay.png" width="120%" style="display: block; margin: auto;" />
 
 # Match Protein Concentrations
 
@@ -150,7 +150,7 @@ Dilute across two steps:
 
 ### Overview of steps to run the western gel: 
 
-<img src="WB_Run.png" width="70%" style="display: block; margin: auto;" />
+<img src="WB_Run.png" width="120%" style="display: block; margin: auto;" />
 
 ### Step #1: Casting Gels
 
@@ -199,7 +199,7 @@ Dilute across two steps:
 - Failure to match the colours will result in terrible things. 
 - Watch the purple line move through the gel. 
 
-<img src="WB_Transfer.png" width="70%" style="display: block; margin: auto;" />
+<img src="WB_Transfer.png" width="120%" style="display: block; margin: auto;" />
 
 *also see [this informative video](https://www.google.com/search?q=western+blot+transfer&rlz=1C1CHBF_enCA937CA937&oq=western+blot+transfer&aqs=chrome.0.0i512l10.3790j0j7&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:830e2b98,vid:NWiVUXcQxjY) for more info*
 
@@ -275,7 +275,7 @@ Dilute across two steps:
 
 - In the example below, the intensity of the GR band would be divided by the intensity of the corresponding gapdh band. 
 
-<img src="Rep_WB.png" width="70%" style="display: block; margin: auto;" />
+<img src="Rep_WB.png" width="120%" style="display: block; margin: auto;" />
 
 
 

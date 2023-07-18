@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = "center",out.width = "70%")
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = "center",out.width = "120%")
 library(tidyverse)
 ```
 
@@ -105,8 +105,11 @@ colnames(bradford) <- c("Label","Protein Concentration","RO to Add", "BSA to Add
 - Add 500 ul STOCK BSA to tube A
 - Serial dilute down the line by half: 
 
-```{r,standard, out.width = "50%"}
-knitr::kable(bradford, "simple", align="lccc")
+```{r,standard,fig.align='center'}
+library(tidyverse)
+library(kableExtra)
+options(kableExtra.html.bsTable = TRUE)
+knitr::kable(bradford,align="lccc")
 ```
 
 #### Prepare Bradford Samples:
