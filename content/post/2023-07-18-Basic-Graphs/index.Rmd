@@ -25,6 +25,10 @@ data <- read_csv("EB_Rats_Nicotine_Sensitization.csv")
 data$PREhorm = factor(data$PREhorm,# change the PREhorm variable to a factor
                       levels = c(0,1), # With two levels, 0 and 1 (ordered)
                       labels = c("OIL","EB")) # And label those levels, the condition names.
+
+data$CHALhorm = factor(data$CHALhorm,# change the CHALhorm variable to a factor
+                      levels = c(0,1), # With two levels, 0 and 1 (ordered)
+                      labels = c("OIL","EB")) # And label those levels, the condition names.
 ```
 
 # Bar chart with error bars: 
@@ -215,7 +219,7 @@ m_se <- melt(se)
 m_means$se <- m_se$value # Bind se values to the means df.
 m_means$group <- c(1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4)
 
-a <- ggplot(m_means,aes(x=variable,y=value,colour=PREhorm,shape=CHALhorm,group=group))+
+a <- ggplot(m_means,aes(x=variable,y=value,colour=PREhorm,shape=PREhorm,group=group))+
   geom_point(size=5,alpha=0.8)+
   geom_line(size=2,alpha=0.8)+
   scale_colour_manual(values=c("#89CFF0","#CD5E77"))+
