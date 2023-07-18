@@ -7,19 +7,19 @@ output:
   pdf_document: default
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning=FALSE, message=FALSE)
-```
+
 
 # Load packages
-```{r}
+
+```r
 library(tidyverse)
 library(reshape2)
 library(ggpubr)
 ```
 
 # Get Data: EB Rats (data from my MA thesis - published [here](https://link.springer.com/article/10.1007/s00213-020-05685-8))
-```{r}
+
+```r
 data <- read_csv("EB_Rats_Nicotine_Sensitization.csv")
 
 data$PREhorm = factor(data$PREhorm,# change the PREhorm variable to a factor
@@ -30,7 +30,8 @@ data$PREhorm = factor(data$PREhorm,# change the PREhorm variable to a factor
 # Bar chart with error bars: 
 - A classic visualization used in basic neuroscience papers, yet surprisingly difficult to find information about online. Many people use boxplots instead because they can't figure out how to generate the basic bar graph in R. 
 - A bar chart is a great way to showcase simple between-group effects. The bar chart can also be the foundation for more comprehensive vizualizations (e.g. overlaid with individual data points - see below)
-```{r}
+
+```r
 CHAL <- as.data.frame(data$ID) # Create temp df
 CHAL$PREhorm <- data$PREhorm # Attach hormone variables
 colnames(CHAL) <- c("ID","PREhorm") # name them
@@ -75,21 +76,26 @@ a <- ggplot(m_means, aes(x=PREhorm,y=value,colour=PREhorm,fill=PREhorm))+ # Crea
 a # Check out the result - Bar chart with error bars
 ```
 
+<img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
 # Add individual points
 - It has become the accepted norm in neuroscience to showcase all the individual points over bar charts to better illustrate the spread of the data. 
 - Here, a new "layer" is added to the existing bar chart created above. 
 - The data for the individual points are called from the parent dataframe "data". 
-```{r}
+
+```r
 a + 
   geom_jitter(data=data,aes(x=PREhorm,y=CHAL,shape=PREhorm),size=4,alpha=0.4,width=0.25) 
-
 ```
+
+<img src="index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 # Bar Chart with Lines for within-subjects data
 - Bars can also be used as a base layer that can have within-subjects data overlaid. 
 - Here, data from the first (habituation) and the second (induction 1) day of behavioural testing are represented as bars on the x-axis. Individual subjects' data are then overlain using geom_line(). 
 - Including lines to represent individual subjects when showcasing within-subjects data better illustrates the overall nature of changes in behaviour across the group. 
-```{r}
+
+```r
 lines_data <- data[ ,1:7]
 lines_data <- lines_data[-2]
 lines_data <- lines_data[-2]
@@ -125,14 +131,21 @@ a <- ggplot(m_means, aes(x=variable,y=value))+
        subtitle = "Shows within-subjects effect across time")
 
 a + geom_line(data=m_lines_data, aes(x=variable,y=value,group=ID),alpha=0.8,size=1)
+```
 
+<img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
+```r
 a + geom_line(data=m_lines_data, aes(x=variable,y=value,group=ID,colour=PREhorm),alpha=0.8,size=1)+
     scale_colour_manual(values=c("#89CFF0","#CD5E77"))
 ```
 
+<img src="index_files/figure-html/unnamed-chunk-5-2.png" width="672" />
+
 # 2x2 Design: 1 btw-sub, 1 wi-sub variable
 - Research designs often encompass multiple variables of interest. One way to showcase the nature of two interacting variables would be to plot bar charts with within-subjects lines next to each other to show within-sujects changes between the groups: 
-```{r}
+
+```r
 a <- data[,1:2]
 a$PREhorm <- data$PREhorm
 a <- a[-2]
@@ -182,111 +195,16 @@ b <- a +
        y="Distance Travelled (cm)")
 
 ggsave("wi_CHAL.png",b,dpi=300,height=4,width=7)
-
 ```
 
 # Line chart acrss days to show within subjects data
 - It is considered appropriate to connect means with a line when working within winthin-subjects data.
     + Conventionally, between-groups data should not be represented with a line. 
-```{r}
-data2 <- data
-data2 <- data2[-2]
-data2 <- data2[-2]
-m_data <- melt(data, id.vars=c("ID","PREhorm","CHALhorm"))
 
-n <- data %>% # Get info about Input's n
-  group_by(`PREhorm`,`CHALhorm`)%>%
-  summarise(n=n())
 
-means <- data %>% # Get info about Input's mean distance value
-  group_by(`PREhorm`,`CHALhorm`)%>%
-  summarise_at(vars(Hab:CHAL),mean) 
 
-sd <- data %>% # Get sd info
-  group_by(`PREhorm`,`CHALhorm`)%>%
-  summarise_at(vars(Hab:CHAL),"sd")
 
-se <- sd[-1] # Drop the ID column, because it's problematic in the nest step and is not longer needed.
-se <- se[-1]
-se <- se / sqrt(n$n-1) # calculate standard error
 
-m_means <- melt(means,id.vars=c("PREhorm","CHALhorm")) # Get data to ggplot format
-m_se <- melt(se)
-m_means$se <- m_se$value # Bind se values to the means df.
-m_means$group <- c(1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4)
-
-a <- ggplot(m_means,aes(x=variable,y=value,colour=PREhorm,shape=CHALhorm,group=group))+
-  geom_point(size=5,alpha=0.8)+
-  geom_line(size=2,alpha=0.8)+
-  scale_colour_manual(values=c("#89CFF0","#CD5E77"))+
-  geom_errorbar(aes(x=variable,ymin=value-se,ymax=value+se),size=2,width=0.25,alpah=0.8)+
-  theme_classic()+
-  theme(plot.title = element_text(hjust=0.5))+
-  theme(plot.subtitle = element_text(hjust=0.5))+
-  theme(legend.position = c(0,1), legend.justification = c(0,1))+
-  labs(x="",
-       y="Distance Travelled (cm)",
-       title= "Line chart with means and error bars (SE)",
-       subtitle="To show changes in group means across time")
-
-a 
-
-```
-
-# Line chart plus individual points
-- Once the base layer of the line chart across days has been created, individual points or lines could be overlain to show individual subjects behaviour across the days of testing. 
-```{r}
-data2 <- data 
-data2 <- data2[-2]
-data2 <- data2[-2]
-data2$group <- 0
-
-data2 <- data2 %>%
-  mutate(group = case_when(
-    data2$PREhorm == "OIL" | data2$CHALhorm == "OIL" ~ 1,
-    data2$PREhorm == "EB" | data2$CHALhorm == "OIL" ~ 2,
-    data2$PREhorm == "OIL" | data2$CHALhorm == "EB" ~ 3,
-    data2$PREhorm == "EB" | data2$CHALhorm == "EB" ~4
-  ))
-
-m_data <- melt(data2,id.vars=c("ID","group","PREhorm","CHALhorm"))
-
-a + 
-  geom_jitter(data=m_data,size=4,alpha=0.5,width=0.25)+
-  labs(
-    subtitle="Individual points helps showcase the nature of the data"
-  )
-```
-
-# Line chart plus individual lines
-```{r}
-a + 
-  geom_line(data=m_data, aes(x=variable,y=value,group=ID),alpha=0.5)+
-  labs(
-    subtitle = "Lines showcase individual changes across the paradigm"
-  )
-```
-
-# Continuous predictor + Continuous outcome 
-- To show group differences in a linear relationship between two continuous variables, assign the variable that you would consider to be the "predictor" to the x-axis and the variable that you would consider to be the "outcome" to the y-axis.
-```{r}
-ggplot(data, aes(x=Hab,y=CHAL,colour=PREhorm,shape=PREhorm,fill=PREhorm))+
-  geom_point(size=5,alpha=0.5)+
-  geom_smooth(method="lm",alpha=0.2)+
-  scale_colour_manual(values=c("#89CFF0","#CD5E77"))+
-  scale_fill_manual(values=c("#89CFF0","#CD5E77"))+
-  theme_classic()+
-  theme(legend.position = c(0,1), legend.justification = c(0,1))+
-  theme(plot.title = element_text(hjust=0.5))+
-  theme(plot.subtitle = element_text(hjust=0.5))+
-  labs(
-    x="Distance travelled during the habituation session",
-    y="Distance travelled on the challenge day",
-    title = "Scatterplot with Lines of Best fit added for each group",
-    subtitle = "Shows the relationship between 2 continuous variables"
-  )
-
-```
 
 
 
