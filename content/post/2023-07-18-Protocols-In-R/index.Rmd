@@ -3,8 +3,8 @@ title: "JLB_Westerns_Protocol"
 author: "JLB"
 date: '2023-05-09'
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -43,7 +43,7 @@ Western blotting can be used for protein detection in a variety of sample types 
 
 *(borrowed from the [Wikipedia page on Western Blotting](https://en.wikipedia.org/wiki/Western_blot), which has tons of useful info):*
 
-```{r}
+```{r,abstract}
 knitr::include_graphics("Abstract.png")
 ```
 
@@ -78,7 +78,7 @@ knitr::include_graphics("Abstract.png")
 
 *Purpose: To measure protein concentrations in each sample* 
 
-```{r}
+```{r,bradford}
 a <- c("Blank","A","B","C","D","E")
 b <- c(0,1,0.5,0.25,0.125,0.0625)
 c <- c(500,500,500,500,500,500)
@@ -105,7 +105,7 @@ colnames(bradford) <- c("Label","Protein Concentration","RO to Add", "BSA to Add
 - Add 500 ul STOCK BSA to tube A
 - Serial dilute down the line by half: 
 
-```{r, out.width = "50%"}
+```{r,standard, out.width = "50%"}
 knitr::kable(bradford, "simple", align="lccc")
 ```
 
@@ -130,7 +130,7 @@ knitr::kable(bradford, "simple", align="lccc")
   + The computer is **slow**, best to set up ahead of time. 
   + Use Gen5 - same as the cytation. 
 
-```{r}
+```{r,bradford_output}
 knitr::include_graphics("Bradford_Assay.png")
 ```
 
@@ -159,7 +159,7 @@ Dilute across two steps:
 
 ### Overview of steps to run the western gel: 
 
-```{r}
+```{r,run}
 knitr::include_graphics("WB_Run.png")
 ```
 
@@ -174,7 +174,7 @@ knitr::include_graphics("WB_Run.png")
   + To make stock: 1 gram APS powder + 10 ml RO -> dissolve and aliquot in 1ml tubes. 
 - 15 mL falcon tubes (2 - label one "resolver" and the other "stacker")
 
-```{r, out.width="75%"}
+```{r,acrylamide, out.width="75%"}
 knitr::include_graphics("Acrylamide.png")
 ```
 
@@ -212,7 +212,7 @@ knitr::include_graphics("Acrylamide.png")
 - Failure to match the colours will result in terrible things. 
 - Watch the purple line move through the gel. 
 
-```{r}
+```{r,transfer}
 knitr::include_graphics("WB_Transfer.png")
 ```
 
@@ -290,7 +290,7 @@ knitr::include_graphics("WB_Transfer.png")
 
 - In the example below, the intensity of the GR band would be divided by the intesity of the corresponding gapdh band. 
 
-```{r}
+```{r,WB_Result}
 knitr::include_graphics("Rep_WB.png")
 ```
 
