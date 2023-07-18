@@ -11,20 +11,32 @@ output:
 
 # Background
 
-- Western blotting allows for rapid semi-quantitative analysis of relative levels of a protein (s) of interest in a set of samples. 
-- Adaptation of the theory used to "blot" RNA (Northern Blotting) and DNA (southern blotting) for protein. 
-- Samples are pulled through a gel via electrophoresis to sort them by size. 
+- Western blotting allows for rapid semi-quantitative analysis of relative levels of a protein(s) of interest in a set of samples. 
+- Adaptation of the theory used to "blot" RNA (Northern Blotting) and DNA (southern blotting) for protein.
+- "Protein soup" from saples containing unknown concentrations of the proteins of interest are pulled through a gel via electrophoresis to sort them by size. 
 - Separated proteins are transferred onto a peice of "membrane" paper, where antibody-based detection can be used to probe protein concentrations. 
 
 # Tissue Collection
 
-Western blotting can be used for protein detection in a variety of sample types (e.g. blood), but typically brain tissue is used in neuroscience applications. Fresh brain tissue should be snap-frozen either via isopentane on dry ice or liquid nitrogen. Perfused brain tissue cannot be used for western blotting because perfusion 'fixes' proteins in their [quatrinary formations](https://en.wikipedia.org/wiki/Protein_quaternary_structure), meaning that they cannot be denatured.
+Western blotting can be used for protein detection in a variety of sample types (e.g. blood), but typically brain tissue is used in neuroscience applications. 
 
-- Prepare 1in*1in pieces of tin foil with animal IDs written on both sides in sharpie for tissue collection. 
+- Fresh brain tissue should be snap-frozen either via isopentane on dry ice or liquid nitrogen. Perfused brain tissue cannot be used for western blotting because perfusion 'fixes' proteins in their [quatrinary formations](https://en.wikipedia.org/wiki/Protein_quaternary_structure), meaning that they cannot be denatured.
+
+### To prepare for brain collection:
+
+- Cut many (more than you need) 1in*1in pieces of tin foil with animal IDs written on both sides in sharpie for tissue collection.
+    + Bring extra blank foils in case you need to re-label or remake during collections. 
 - Chill ~50 ml of isopentane on dry ice for >10 mins before beginning. 
-- Fill the isopentane beaker right up to the top to avoid fresh tissue touching cold glass. If brains touch the frozen walls of the beaker they will stick.
+    + Fill the isopentane beaker right up to the top to avoid fresh tissue touching cold glass. If brains touch the frozen walls of the beaker they will stick.
+    
+### Snap freezing whole brains:
+
+- Drop brains directly into isopentane.
+    + They will bubble initially.
+    + When the bubbling stops (after about 10 seconds submerged), the tissue is frozen solid.
+- Remove frozen brain from isobentane with metal forcepts, place in the labeled tin foil square, and wrap it up like a candy. 
 - Store snap-frozen brains wrapped in tin foils at -80 until the time of sample processing. 
-- Isopentane can be stored in the fridge and re-used until it disappears (evaporates at room temperature).
+- Isopentane can be stored in the fridge and re-used until it disappears (it evaporates at room temperature).
 
 # Dissection 
 
@@ -269,7 +281,7 @@ Dilute across two steps:
   + Dump down the sink at the end of the hour 
 - Wash membranes 5x + with TBS-T. Residual secondary antibody can interfere with image detection. 
 
-##### IMAGE - Save pictures on USB
+## IMAGE - Save pictures on USB
 
 **You must have both a target protein and a normalizer protein (loading control) for each membrane**
 
