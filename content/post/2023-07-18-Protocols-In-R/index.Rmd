@@ -3,8 +3,8 @@ title: "JLB_Westerns_Protocol"
 author: "JLB"
 date: '2023-05-09'
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
