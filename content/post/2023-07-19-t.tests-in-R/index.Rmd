@@ -226,7 +226,7 @@ ggarrange(b,c)
 t.test(Chal~PREhorm, data=data, var.equal = TRUE)
 ```
 
-Written result:
+## Written result:
 
 > On the challenge day, rats treated with EB during the "induction" phase of sensitization travelled longer distances than those treated with OIL (*t*(45) = 4.82, *p* < 0.001).
 
