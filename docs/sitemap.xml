@@ -3,15 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/</loc>
-    <lastmod>2023-07-12T21:13:14-05:00</lastmod>
+    <lastmod>2023-07-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/post/</loc>
+    <lastmod>2023-07-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/2023/07/19/t.tests-in-r/</loc>
+    <lastmod>2023-07-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/2023/07/12/example-data/</loc>
     <lastmod>2023-07-12T21:13:14-05:00</lastmod>
   </url><url>
     <loc>/2023/07/12/functions-in-r/</loc>
-    <lastmod>2023-07-12T21:13:14-05:00</lastmod>
-  </url><url>
-    <loc>/post/</loc>
     <lastmod>2023-07-12T21:13:14-05:00</lastmod>
   </url><url>
     <loc>/2023/05/09/jlb_westerns_protocol/</loc>

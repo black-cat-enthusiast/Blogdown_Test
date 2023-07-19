@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.115.2">
+
+
+<title>t.tests in R - A Hugo website</title>
+<meta property="og:title" content="t.tests in R - A Hugo website">
+
+
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/black-cat-enthusiast/Blogdown_Test">Github</a></li>
+    
+    <li><a href="https://black-cat-enthusiast.github.io/Blogdown_Test/">Home</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">4 min read</span>
+    
+
+    <h1 class="article-title">t.tests in R</h1>
+
+    
+    <span class="article-date">2023-07-19</span>
+    
+
+    <div class="article-content">
+      <h1 id="the-general-linear-model">The General Linear Model</h1>
+<p>The GLM is a <em>family</em> of analytic approaches that involves fitting lines to data points.</p>
+<h1 id="the-underlying-formula-for-the-glm">The underlying formula for the GLM:</h1>
+<p>$$ \dfrac{signal}{noise} $$
+Or, in other words,</p>
+<p>$$ \dfrac{systematic\ variance}{error\ variance} $$</p>
+<ul>
+<li>The &ldquo;statistic&rdquo; that you see reported represents this ratio.
+<ul>
+<li><strong>e.g. <em>t</em> (15) = 4.51, <em>p</em> = 0.02</strong></li>
+<li>4.51x more systematic variance than error variance</li>
+<li>2% chance that these sets of scores belong to a common parent distribution</li>
+</ul>
+</li>
+</ul>
+<h1 id="glm-can-be-broadly-divided-into-3-families-of-analyses">GLM can be broadly divided into 3 families of analyses:</h1>
+<p><strong>1. t-tests</strong></p>
+<ul>
+<li>involve comparisons between two groups</li>
+<li><strong>require</strong> a <em>categorical IV</em> and a <em>continuous DV</em></li>
+</ul>
+<ol start="2">
+<li>
+<p>ANOVA (&amp; cousins: MANOVA,ANCOVA,MANCOVA)</p>
+</li>
+<li>
+<p>Regressions</p>
+</li>
+</ol>
+<h1 id="types-of-t-tests">Types of t-tests:</h1>
+<p>There are 3 distinct yet related types of t-tests, each used for unique scenarios:</p>
+<ol>
+<li>one-sample t-test</li>
+<li>paired samples t-test (aka &ldquo;dependent samples&rdquo;)</li>
+<li>independent samples t-test</li>
+</ol>
+<img src="t.test_types.png" width="602" />
+<h1 id="one-sample-t-test">One sample t-test</h1>
+<ul>
+<li>As the name implies, involves a situation where you are testing one group of individuals against a single &ldquo;known&rdquo; value.</li>
+<li>Common example in the field of behavioural neuroscience would be  comparing behaviour to individual baseline measurements.</li>
+</ul>
+<p>$$ One\ Sample\ t = \dfrac {\bar{X} - \mu}{s / \sqrt(n)} $$</p>
+<p>WHERE</p>
+<ul>
+<li>&ldquo;X bar&rdquo; =  mean of your sample</li>
+<li>&ldquo;mew&rdquo; = the population mean you are testing against</li>
+<li>&ldquo;s&rdquo; = standard deviation of the sample you tested</li>
+<li>&ldquo;n&rdquo; = the sample size</li>
+</ul>
+<h1 id="paired-samples-t-test">Paired Samples t-test</h1>
+<ul>
+<li>Involves comparing multiple measurements from a single sample of people (usually)
+<ul>
+<li>Sometimes used for &ldquo;matched&rdquo; samples (e.g. twins in human studies)</li>
+</ul>
+</li>
+</ul>
+<p>$$ Paired; Samples; t = \dfrac {\Delta \bar{X}}{\Delta s / \sqrt(n)}  $$</p>
+<p>WHERE</p>
+<ul>
+<li>&ldquo;Delta X bar&rdquo; = Change in the mean between the two measurements</li>
+<li>&ldquo;Delta s&rdquo; = Change in standard deviation between the two measurements</li>
+<li>&ldquo;n&rdquo; = sample size</li>
+</ul>
+<h1 id="independent-samples-t-test">Independent Samples t-test</h1>
+<ul>
+<li>involves comparing two unrelated groups.</li>
+</ul>
+<p>$$  t = \dfrac {\bar{X1} - \bar{X2}} {SD_{pooled}}  $$
+WHERE</p>
+<ul>
+<li>&ldquo;X bar_1&rdquo; = The mean of the first group (control)</li>
+<li>&ldquo;X bar_2&rdquo; = The mean of the second group (test)</li>
+<li>&ldquo;SD_pooled&rdquo; = The pooled standard deviation of the two groups</li>
+</ul>
+<h1 id="examples-using-eb_nicotine_rats">Examples using EB_Nicotine_Rats</h1>
+<h3 id="link-to-raw-data-used-in-this-examplehttpsgithubcomblack-cat-enthusiastblogdown_testblobmastercontentpost2023-07-12-example-dataeb_rats_nicotine_sensitizationcsv"><a href="https://github.com/black-cat-enthusiast/Blogdown_Test/blob/master/content/post/2023-07-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv">Link to raw data used in this example.</a></h3>
+<h4 id="below-are-codes-to-execute-each-type-of-t-test-in-r"><em>Below are codes to execute each type of t-test in R.</em></h4>
+<h1 id="one-sample-t-test-in-r">One sample t-test in R</h1>
+<pre><code class="language-r">data &lt;- read_csv(&quot;EB_Rats_Nicotine_Sensitization.csv&quot;)
+
+data$CHALpercBL &lt;- (data$CHAL / data$Hab) * 100
+t.test(data$CHALpercBL, mu = 100)
+</code></pre>
+<pre><code>## 
+## 	One Sample t-test
+## 
+## data:  data$CHALpercBL
+## t = 8.1908, df = 46, p-value = 0.000000000155
+## alternative hypothesis: true mean is not equal to 100
+## 95 percent confidence interval:
+##  130.6810 150.6741
+## sample estimates:
+## mean of x 
+##  140.6776
+</code></pre>
+<h2 id="written-result">Written result:</h2>
+<blockquote>
+<p>Distance travelled on the challenge day was significantly higher than indivdual baseline measurements (one sample <em>t</em>(46) = 8.19, <em>p</em> &lt;0.001).</p>
+</blockquote>
+<h2 id="graphical-representation-of-this-analysis">Graphical representation of this analysis:</h2>
+<p>The deviations (aka the &ldquo;error variance&rdquo;) for each model are compared. If the statistic is significant (<em>p</em> &lt; 0.05), it would indicate that the mean is a significantly better predictor of the data than the null model (in this case, the mean).</p>
+<img src="../../../../2023/07/19/t.tests-in-r/index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<h1 id="paired-samples-t-test-in-r">Paired samples t-test in R</h1>
+<pre><code class="language-r">Hab &lt;- data$Hab
+Chal &lt;- data$CHAL
+
+t.test(Chal, Hab, paired = TRUE, var.equal = TRUE)
+</code></pre>
+<pre><code>## 
+## 	Paired t-test
+## 
+## data:  Chal and Hab
+## t = 8.9119, df = 46, p-value = 0.00000000001391
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  4726.958 7485.298
+## sample estimates:
+## mean difference 
+##        6106.128
+</code></pre>
+<p>Written result:</p>
+<blockquote>
+<p>Rats increased distance travelled between the habituation session and the challenge day (paired <em>t</em>(46) = 8.91, <em>p</em> &lt; 0.001).</p>
+</blockquote>
+<h2 id="graphical-representation-of-this-analysis-1">Graphical representation of this analysis</h2>
+<p>A paired-samples t-test is really just a one-sample t-test where the group mean (Alternative model) is compared to the null model (zero).</p>
+<p>One way to think about vizualizing this statistical approach would be to plot individual changes in distance travelled between the two days of testing. The statistic corresponds to the slope of the lines - &ldquo;on average, are the lines sloping upwards, downwards, or not changing?&rdquo;</p>
+<img src="../../../../2023/07/19/t.tests-in-r/index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<p>Another way to vizualize the paired samples t-test would be to show the &ldquo;Null model&rdquo; with deviations from the individual points to zero, compared to the &ldquo;Alternaltive model&rdquo;, which shows deviations to the group mean change (6106cm):</p>
+<img src="../../../../2023/07/19/t.tests-in-r/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<h1 id="independent-samples-t-test-in-r">Independent Samples t-test in R</h1>
+<pre><code class="language-r">t.test(Chal~PREhorm, data=data, var.equal = TRUE)
+</code></pre>
+<pre><code>## 
+## 	Two Sample t-test
+## 
+## data:  Chal by PREhorm
+## t = -4.8159, df = 45, p-value = 0.00001694
+## alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+## 95 percent confidence interval:
+##  -7824.757 -3209.855
+## sample estimates:
+## mean in group 0 mean in group 1 
+##        19343.65        24860.96
+</code></pre>
+<p>Written result:</p>
+<blockquote>
+<p>On the challenge day, rats treated with EB during the &ldquo;induction&rdquo; phase of sensitization travelled longer distances than those treated with OIL (<em>t</em>(45) = 4.82, <em>p</em> &lt; 0.001).</p>
+</blockquote>
+<h2 id="graphical-representation-of-this-analysis-2">Graphical representation of this analysis</h2>
+<img src="../../../../2023/07/19/t.tests-in-r/index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

@@ -6,7 +6,19 @@
     <description>Recent content in Posts on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 12 Jul 2023 21:13:14 -0500</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>t.tests in R</title>
+      <link>/2023/07/19/t.tests-in-r/</link>
+      <pubDate>Wed, 19 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/2023/07/19/t.tests-in-r/</guid>
+      <description>The General Linear Model The GLM is a family of analytic approaches that involves fitting lines to data points.
+The underlying formula for the GLM: $$ \dfrac{signal}{noise} $$ Or, in other words,
+$$ \dfrac{systematic\ variance}{error\ variance} $$
+The &amp;ldquo;statistic&amp;rdquo; that you see reported represents this ratio. e.g. t (15) = 4.51, p = 0.02 4.51x more systematic variance than error variance 2% chance that these sets of scores belong to a common parent distribution GLM can be broadly divided into 3 families of analyses: 1.</description>
+    </item>
+    
     <item>
       <title>Example Data</title>
       <link>/2023/07/12/example-data/</link>
