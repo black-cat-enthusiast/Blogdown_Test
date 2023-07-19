@@ -1,0 +1,334 @@
+---
+title: "ANOVA "
+author: "JLB"
+date: "2023-07-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE)
+
+library(tidyverse)
+library(ggpubr)
+library(reshape2)
+options(scipen = 999)
+```
+
+# The General Linear Model
+
+The GLM is a *family* of analytic approaches that involves fitting lines to data points.
+
+### The underlying formula for the GLM: 
+
+
+$$ \dfrac{signal}{noise} $$
+
+OR, in other words,
+
+$$ \dfrac{systematic\ variance}{error\ variance} $$
+
+
+# ANOVA (Analysis of Variance)
+
+Like [t-tests](), ANOVA **requires** *categorical IV(s)* and a *continuous DV*
+
+- ANOVA can handle any number of groups and any number of factors. 
+  + This is the main advantage of ANOVA over t-tests, which can only handle **2 groups** and **a single factor**
+
+# Dimensions of the ANOVA: 
+
+### The number of factors: 
+
+- **"One-Way ANOVA"** = 1 factor
+- **"Two-way ANOVA"** = 2 factors
+
+### The experimental design:
+
+- **repeated measures** = Multiple measurements involving the same individuals.
+- **independent samples** = Comparisons involving multiple groups of individuals.
+
+```{r, include=FALSE}
+library(tidyverse)
+data <- read_csv("EB_Rats_Nicotine_Sensitization.csv")
+
+
+data$PREhorm = factor(data$PREhorm,# change the PREhorm variable to a factor
+                      levels = c(0,1), # With two levels, 0 and 1 (ordered)
+                      labels = c("OIL","EB")) # And label those levels, the condition names.
+
+data$CHALhorm = factor(data$CHALhorm, # change the PREhorm variable to a factor
+                      levels = c(0,1),
+                      labels = c("OIL","EB"))
+
+data <- data %>%
+  mutate(group = case_when(
+    data$PREhorm == "OIL" & data$CHALhorm == "OIL" ~ "OIL / OIL",
+    data$PREhorm == "EB" &  data$CHALhorm == "OIL" ~ "EB / OIL",
+    data$PREhorm == "OIL" & data$CHALhorm == "EB" ~ "OIL / EB",
+    data$PREhorm == "EB" &  data$CHALhorm == "EB" ~ "EB / EB"
+  ))
+
+data$group <- as.character(data$group)
+data$group <- factor(data$group, levels=c("OIL / OIL", "EB / OIL", "OIL / EB", "EB / EB"))
+
+my_sum <- data %>%
+  group_by(group) %>%
+  summarise(n=n(),
+            mean=mean(CHAL),
+            sd=sd(CHAL)) %>%
+  mutate(se=sd / sqrt(n))
+
+my_colours <- c("blue","red","green","purple")
+
+x <- ggplot(my_sum, aes(x=group,y=mean,colour=group,fill=group))+
+  geom_bar(stat="identity", alpha=0.2)+
+  geom_errorbar(aes(x=group,ymin=mean-se,ymax=mean+se, width=0.5))+
+  scale_colour_manual(values = my_colours)+
+  scale_fill_manual(values=my_colours)+
+  theme_classic()+
+  theme(legend.position = "none")+
+  labs(x="",
+       y="Distance Travelled (cm)")
+
+y <- x + geom_jitter(data=data,aes(x=group,y=CHAL),size=5,alpha=0.5,width=0.15)
+
+mean(data$CHAL)
+
+Null <- ggplot(data=data, aes(x=ID,y=CHAL, colour=group))+
+  geom_point(size=3,alpha=0.5)+
+  scale_colour_manual(values = my_colours)+
+  scale_fill_manual(values=my_colours)+
+  theme_classic()+
+  theme(plot.title = element_text(hjust=0.5))+
+  theme(plot.subtitle = element_text(hjust=0.5))+
+  theme(legend.position="none")+
+  geom_hline(yintercept=mean(data$CHAL))+
+  geom_segment(aes(x=ID,y=CHAL,xend=ID,yend=mean(data$CHAL)))+
+  labs(x="ID",
+       y="Distance travelled (cm)",
+       title = "Model #1 (null model)",
+       subtitle = "Horizontal Black line represents the mean \n of all the data points (a.k.a. the **Grand mean**)")+
+  ylim(0,40000)
+
+OIL_OIL <- data[data$group == "OIL / OIL", ]
+EB_OIL <- data[data$group == "EB / OIL", ]
+OIL_EB <- data[data$group == "OIL / EB", ]
+EB_EB <- data[data$group == "EB / EB", ]
+
+O.O_mean <- mean(OIL_OIL$CHAL)
+E.O_mean <- mean(EB_OIL$CHAL)
+O.E_mean <- mean(OIL_EB$CHAL)
+E.E_mean <- mean(EB_EB$CHAL)
+
+Exp <- ggplot(data=OIL_OIL, aes(x=ID,y=CHAL))+
+  geom_point(colour="blue", size=3,alpha=0.5)+
+  geom_point(data=EB_OIL, aes(x=ID,y=CHAL),colour="red",size=3,alpha=0.5)+
+  geom_point(data=OIL_EB, aes(x=ID,y=CHAL),colour="green",size=3,alpha=0.5)+
+  geom_point(data=EB_EB, aes(x=ID,y=CHAL),colour="purple",size=3,alpha=0.5)+
+  geom_hline(yintercept=O.O_mean,colour="blue")+
+  geom_hline(yintercept=E.O_mean,colour="red")+
+  geom_hline(yintercept=O.E_mean,colour="green")+
+  geom_hline(yintercept=E.E_mean,colour="purple")+
+  geom_segment(data=OIL_OIL, aes(x=ID,y=CHAL,xend=ID,yend=O.O_mean),colour="blue")+
+  geom_segment(data=EB_OIL, aes(x=ID,y=CHAL,xend=ID,yend=E.O_mean),colour="red")+
+  geom_segment(data=OIL_EB, aes(x=ID,y=CHAL,xend=ID,yend=O.E_mean),colour="green")+
+  geom_segment(data=EB_EB, aes(x=ID,y=CHAL,xend=ID,yend=E.E_mean),colour="purple")+
+  theme_classic()+
+  theme(plot.title = element_text(hjust=0.5))+
+  theme(plot.subtitle = element_text(hjust=0.5))+
+  labs(x="ID",
+       y="Distance travelled (cm)",
+       title = "Model #2 (experimental model)",
+       subtitle = "Horizontal coloured lines represent the means \n of each of the 4 groups")+
+  ylim(0,40000)
+
+ggsave("Null.png", Null, height=4,width=4,dpi=300)
+ggsave("Exp.png",Exp,height=4,width=4,dpi=300)
+```
+
+# One-Way ANOVA (Independent Samples)
+
+```{r,echo=FALSE}
+ggarrange(Null,Exp)
+```
+
+- Here, we are comparing whether the 4 individual **group means** is a better fit for the data than the **Grand Mean** 
+- Vertical coloured lines represent the **residuals** 
+- To begin calculating ANOVA, each **residual** is squared (^2)
+- The **sum of squares** = the sum of all the squared residuals (All added together)
+
+Mean Square is calculated separately for each model:
+
+$$ Mean\ Square = \dfrac {Sum\ of\ Squares}{df} $$
+
+The ratio between the two models is computed as the final *F* value:
+
+$$ F =  \dfrac{Mean\ Square\ Between}{Mean\ Square\ Within} $$
+### Prepare data 
+
+- Prepare a column named "group" that codes the four experimental conditions.
+
+```{r}
+# create a single variable - "group" - to represent hormone treatments
+data <- data %>%
+  mutate(group = case_when(
+    data$PREhorm == "OIL" & data$CHALhorm == "OIL" ~ "OIL / OIL",
+    data$PREhorm == "EB" &  data$CHALhorm == "OIL" ~ "EB / OIL",
+    data$PREhorm == "OIL" & data$CHALhorm == "EB" ~ "OIL / EB",
+    data$PREhorm == "EB" &  data$CHALhorm == "EB" ~ "EB / EB"
+  ))
+# Reorder the "group" variable 
+data$group <- as.character(data$group)
+data$group <- factor(data$group, levels=c("OIL / OIL", "EB / OIL", "OIL / EB", "EB / EB"))
+```
+
+### Compute one-way ANOVA
+
+```{r}
+oneway.test(CHAL ~ group, data=data, var.equal = TRUE)
+```
+
+### Compute Tukey Follow-up comparisons of pairwise between-group comparisons. 
+
+```{r}
+a <- aov(CHAL ~ group, data=data)
+TukeyHSD(a, conf.level = .95)
+```
+
+- The above example is not "the best" application of the OneWay ANOVA, or the best analysis for the data - The above approach would be appropriate if the 4 conditions were unrelated. 
+
+- Here, the experiemnt is really a 2x2 design (PREhorm*CHALhorm), so it would be more appropriate to analyze using a Two-way ANOVA instead.
+
+# Two-Way ANOVA on EB Rats Data  (Indpendent Samples)
+
+```{r}
+a <- aov(CHAL ~ PREhorm * CHALhorm, data=data)
+summary(a)
+```
+
+## Written Result: 
+
+> Rats treated with EB during the induction phase of sensitization travelled longer distances on the challenge day than rats treated with OIL vehicle during induction (*F*(1,43) = 22.40, *p* < 0.001).
+
+> The effect of EB treatment on the challenge day and the interaction between induction and challenge hormone were non-significant (*p* = 0.39, *p* = 0.86, respectively).
+
+# One-Way Repeated Measures ANOVA
+
+Could be used to answer the question *do the rats exhibit overall increases in distance travelled across the multi-injection paradigm?* 
+
+- The question could also be framed as *deos the nicotine paradigm produces locomotor sensitization?*
+
+The same data are plotted to showcase individual changes in distance travelled across the four days of testing. 
+
+```{r,echo=FALSE, fig.align='center'}
+data %>%
+  select(c("ID","Hab","IND_1","IND_2","CHAL")) %>%
+  melt(id.vars = "ID") %>%
+  ggplot(aes(x=variable,y=value,group=ID))+
+  geom_line()+
+  theme_classic()+
+  theme(plot.title = element_text(hjust=0.5))+
+  labs(x="Day of Testing",
+       y="Distance Travelled (cm)",
+       title = "Individual changes in Distance Across Days of Testing")
+```
+
+### Prepare Data
+```{r} 
+library(reshape2)
+long_data <- data %>%
+  select(c("ID","Hab","IND_1","IND_2","CHAL")) %>%
+  melt(id.vars = "ID")
+head(long_data)
+```
+
+### Compute ANOVA
+```{r}
+library(rstatix)
+a <- anova_test(data=long_data, dv=value, wid=ID, within = variable)
+get_anova_table(a)
+```
+
+# Compute Follow-up comparisons
+```{r}
+long_data %>%
+  pairwise_t_test(
+  value ~ variable, paired = TRUE,
+  p.adjust.method = "bonferroni"
+  )
+```
+
+## Written Result:
+
+> Rats treated with EB during the induction phase travelled longer distances on the challenge day than did rats treated with OIL vehicle during induction (*F*(1,45) = 23.19, *p* < 0.001)
+
+> Rats treated with EB during the induction phase exhibited an increase in distance travelled between the second induction day and the challange day (*p* < 0.001) whereas rats treated with OIL vehicle during induction did not (*p* = 0.24)
+
+# Two-Way Repeated Measures ANOVA
+
+### Prep Data 
+- Output: A "long-form" version of the dataframe.
+```{r} 
+library(reshape2) # Required for the melt function
+long_data_2 <- data %>% # Take the long dataframe AND TEHN 
+  select(c("ID","PREhorm","Hab","IND_1","IND_2","CHAL")) %>% 
+  melt(id.vars = c("ID","PREhorm")) # Switch to ggplot format
+head(long_data) # Check out the result
+```
+
+### Compute ANOVA
+
+```{r, out.width="50%"}
+a <- anova_test(data=long_data_2, dv=value, wid=ID, within = variable, between = PREhorm)
+# Make a pretty table: 
+knitr::kable(get_anova_table(a))
+```
+
+### Compute Follow-up comparisons version 1 of 2:
+
+- This style of follow up allows you to assess individual changes between days within individuals of different groups. 
+
+```{r}
+a <- long_data_2 %>%
+  group_by(PREhorm)%>%
+  pairwise_t_test(
+  value ~ variable, paired = TRUE,
+  p.adjust.method = "bonferroni"
+  )
+# Make a pretty table: 
+library(kableExtra)
+knitr::kable(a)
+```
+
+### Compute Follow-up comparisons version 2 of 2:
+
+- This style of follow up allows you to assess between-group differences on each day of testing.
+
+```{r}
+
+a <- long_data_2 %>%
+  group_by(variable)%>%
+  pairwise_t_test(
+  value ~ PREhorm, paired = FALSE,
+  p.adjust.method = "bonferroni"
+  )
+# Make a pretty table: 
+knitr::kable(a)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

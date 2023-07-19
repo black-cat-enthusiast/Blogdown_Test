@@ -8,6 +8,20 @@
     <language>en-US</language>
     <lastBuildDate>Wed, 19 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>ANOVA </title>
+      <link>/2023/07/19/anova/</link>
+      <pubDate>Wed, 19 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/2023/07/19/anova/</guid>
+      <description>The General Linear Model The GLM is a family of analytic approaches that involves fitting lines to data points.
+The underlying formula for the GLM: $$ \dfrac{signal}{noise} $$
+OR, in other words,
+$$ \dfrac{systematic\ variance}{error\ variance} $$
+ANOVA (Analysis of Variance) Like t-tests, ANOVA requires categorical IV(s) and a continuous DV
+ANOVA can handle any number of groups and any number of factors. This is the main advantage of ANOVA over t-tests, which can only handle 2 groups and a single factor Dimensions of the ANOVA: The number of factors: &amp;ldquo;One-Way ANOVA&amp;rdquo; = 1 factor &amp;ldquo;Two-way ANOVA&amp;rdquo; = 2 factors The experimental design: repeated measures = Multiple measurements involving the same individuals.</description>
+    </item>
+    
+    <item>
       <title>t.tests in R</title>
       <link>/2023/07/19/t.tests-in-r/</link>
       <pubDate>Wed, 19 Jul 2023 00:00:00 +0000</pubDate>
