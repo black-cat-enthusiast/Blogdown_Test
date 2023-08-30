@@ -1,5 +1,5 @@
 ---
-title: "Subsetting"
+title: "Subsetting Data"
 author: "JLB"
 date: "2023-08-12"
 output: html_document
@@ -14,6 +14,11 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 - Subsequent data processing setps (statistical analysis, graph generation) works best if you select the data that you are interested in. Splitting up large data sets into multiple subsetted dataframes has many functions in R programming. 
 
 # Get data
+
+### [Link to explaination about raw data](https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/)
+
+### [Link to raw data](https://github.com/black-cat-enthusiast/Blogdown_Test/blob/master/content/post/2023-07-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
+
 ```{r}
 library(tidyverse) 
 data <- read_csv("EB_Rats_Nicotine_Sensitization.csv")
