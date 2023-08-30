@@ -42,7 +42,7 @@ head(data)
 
 ```r
 # Select the first 6 columns 
-data[ ,1:6] 
+data[ ,1:6]
 ```
 
 ```
@@ -62,24 +62,6 @@ data[ ,1:6]
 ## # ℹ 37 more rows
 ```
 
-```r
-# You can also assign the subsetted data frame onto a new variable 
-# It is generally better to create new variables than to overwrite. 
-data_2 <- data[ ,1:6] 
-head(data_2) 
-```
-
-```
-## # A tibble: 6 × 6
-##      ID Sex    Status PREhorm CHALhorm   Hab
-##   <dbl> <chr>  <chr>    <dbl>    <dbl> <dbl>
-## 1     1 Female OVX          1        1 16625
-## 2     2 Female OVX          1        1 17097
-## 3     3 Female OVX          0        1 17909
-## 4     4 Female OVX          0        1 14199
-## 5     5 Female OVX          0        0 21715
-## 6     6 Female OVX          0        0 14733
-```
 
 ```r
 # Select the first 6 rows 
@@ -97,6 +79,28 @@ data[1:6, ]
 ## 5     5 Female OVX          0        0 21715 23184 27482 26809
 ## 6     6 Female OVX          0        0 14733 19223 23280 23845
 ```
+
+- You can also assign the subsetted data frame onto a new variable 
+- It is generally better to create new variables than to overwrite existing variables. 
+
+
+```r
+data_2 <- data[ ,1:6] # Assign the first 6 columns of "data" onto a new variable named data_2
+head(data_2) # Print out the first 6 rows of data_2
+```
+
+```
+## # A tibble: 6 × 6
+##      ID Sex    Status PREhorm CHALhorm   Hab
+##   <dbl> <chr>  <chr>    <dbl>    <dbl> <dbl>
+## 1     1 Female OVX          1        1 16625
+## 2     2 Female OVX          1        1 17097
+## 3     3 Female OVX          0        1 17909
+## 4     4 Female OVX          0        1 14199
+## 5     5 Female OVX          0        0 21715
+## 6     6 Female OVX          0        0 14733
+```
+
 
 ```r
 # Select the first 6 rows of the first 6 columns 
@@ -119,10 +123,12 @@ data[1:6,1:6]
 
 - Especially when working with larger datasets, you may want to subset based on cell values rather than position within the dataframe. Selecting based on content is a more robust approach because it does not require manual accuracy checks. 
 
+- including a comma and a space after the expression instructs R to take all the data from the columns. This is important as the program will throw an error if you forget to include comma space.  
+
 
 ```r
 # Select all columns for the rows that have the value "OIL" in the column PREhorm:
-data[data$PREhorm == 1, ]
+data[data$PREhorm == 1, ] # Select instances of "data" where the value in the column PREhorm equals exactly 1, take all rows
 ```
 
 ```
@@ -142,9 +148,11 @@ data[data$PREhorm == 1, ]
 ## # ℹ 14 more rows
 ```
 
+- Data can also be selected based on multiple criteria:
+
 
 ```r
-# Can also include multiple criteria: 
+# Select all columns for rows where PREhorm equals exactly 1 AND CHALhorm equals exactly 1. 
 data[data$PREhorm == 1 & data$CHALhorm == 1, ]
 ```
 
@@ -169,6 +177,8 @@ data[data$PREhorm == 1 & data$CHALhorm == 1, ]
 ### Method #3: dplyr "select"
 
 - You can also use the "select" function inside of dplyr code blocks. This is generally the most elegant solution to choosing a subset of your dataframe to work with.
+
+- The result of the "select" function inside dplyr code blocks does not need to be assigned onto another variable, and the result of the below expression could be piped directly to the summarise function and / or to ggplot2 for visualization. 
 
 
 ```r
