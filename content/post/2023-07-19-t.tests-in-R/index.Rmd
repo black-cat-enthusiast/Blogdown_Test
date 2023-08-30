@@ -2,7 +2,9 @@
 title: "t.tests in R"
 author: "JLB"
 date: "2023-07-19"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -49,7 +51,7 @@ There are 3 distinct yet related types of t-tests, each used for unique scenario
 2. paired samples t-test (aka "dependent samples")
 3. independent samples t-test
 
-```{r, echo=FALSE,out.width="120%"}
+```{r, echo=FALSE,out.width="80%"}
 knitr::include_graphics("t.test_types.png")
 ```
 
