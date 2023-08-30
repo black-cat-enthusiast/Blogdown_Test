@@ -6,7 +6,16 @@
     <description>Recent content on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 19 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Subsetting</title>
+      <link>/2023/08/12/subsetting/</link>
+      <pubDate>Sat, 12 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/2023/08/12/subsetting/</guid>
+      <description>Subsetting Data in R Subsequent data processing setps (statistical analysis, graph generation) works best if you select the data that you are interested in. Splitting up large data sets into multiple subsetted dataframes has many functions in R programming. Get data library(tidyverse) data &amp;lt;- read_csv(&amp;quot;EB_Rats_Nicotine_Sensitization.csv&amp;quot;)head(data)## # A tibble: 6 × 9## ID Sex Status PREhorm CHALhorm Hab IND_1 IND_2 CHAL## &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;## 1 1 Female OVX 1 1 16625 15730 17834 18070## 2 2 Female OVX 1 1 17097 20482 26562 28665## 3 3 Female OVX 0 1 17909 23757 17523 22136## 4 4 Female OVX 0 1 14199 11810 13086 11609## 5 5 Female OVX 0 0 21715 23184 27482 26809## 6 6 Female OVX 0 0 14733 19223 23280 23845Select some of the columns Method #1: by position In R language, square brackets mean &amp;ldquo;where&amp;rdquo;.</description>
+    </item>
+    
     <item>
       <title>ANOVA </title>
       <link>/2023/07/19/anova/</link>
