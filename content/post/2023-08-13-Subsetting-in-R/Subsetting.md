@@ -9,7 +9,9 @@ output: html_document
 
 # Subsetting Data in R
 
-- Subsequent data processing setps (statistical analysis, graph generation) works best if you select the data that you are interested in. Splitting up large data sets into multiple subsetted dataframes has many functions in R programming. 
+- Subsequent data processing setps (statistical analysis, graph generation) works best if you select the data that you are interested in. 
+
+- Splitting up large data sets into multiple subsetted dataframes has many functions in R programming and is a useful tactic to maintain readable code blocks. 
 
 # Get data
 
@@ -19,9 +21,9 @@ output: html_document
 
 
 ```r
-library(tidyverse) 
-data <- read_csv("EB_Rats_Nicotine_Sensitization.csv")
-head(data)
+library(tidyverse) # Load the tidyverse package
+data <- read_csv("EB_Rats_Nicotine_Sensitization.csv") # Call in the data
+head(data) # check out the first six rows of data. 
 ```
 
 ```
@@ -36,17 +38,20 @@ head(data)
 ## 6     6 Female OVX          0        0 14733 19223 23280 23845
 ```
 
-# Select some of the columns
+# Subsetting = Select only a portion of the data. 
+
+There are multiple methods to accomplish selecting only some of the data in R. 3 different approaches are outlined below. Which approach is preferable for a given situation depends on the parameters of the task and the desired output. 
 
 ### Method #1: by position 
 
-- In R language, square brackets [ ] mean "where". Inside of the square brackets, there can be two sets of numbers separated by a comma. Values that come before the comma refer to the ROWS and values that come after the comma refer to the COLUMNS. Blank space means "take all". 
-
-- Square brackets can be used to select a "subset" of a larger dataframe. 
+- In R language, square brackets mean "where". Inside of the square brackets, there can be two sets of numbers separated by a comma. 
+    + Values that come before the comma refer to the ROWS 
+    + Values that come after the comma refer to the COLUMNS 
+    + A blank space means "take all" 
 
 
 ```r
-# Select the first 6 columns 
+# Select all rows of the first 6 columns 
 data[ ,1:6]
 ```
 
@@ -69,7 +74,7 @@ data[ ,1:6]
 
 
 ```r
-# Select the first 6 rows 
+# Select all columns of the first 6 rows 
 data[1:6, ]
 ```
 
@@ -128,7 +133,7 @@ data[1:6,1:6]
 
 - Especially when working with larger datasets, you may want to subset based on cell values rather than position within the dataframe. Selecting based on content is a more robust approach because it does not require manual accuracy checks. 
 
-- including a comma and a space after the expression instructs R to take all the data from the columns. This is important as the program will throw an error if you forget to include comma space.  
+- Including a comma and a space after the expression instructs R to take all the data from the columns. This is important as the program will throw an error if you forget to include comma space.  
 
 
 ```r
@@ -153,7 +158,7 @@ data[data$PREhorm == 1, ] # Select instances of "data" where the value in the co
 ## # ℹ 14 more rows
 ```
 
-- Data can also be selected based on multiple criteria:
+Data can also be selected based on multiple criteria:
 
 
 ```r
