@@ -62,7 +62,7 @@
 
   <article class="article">
     
-    <span class="article-duration">6 min read</span>
+    <span class="article-duration">7 min read</span>
     
 
     <h1 class="article-title">Subsetting Data</h1>
@@ -74,14 +74,19 @@
     <div class="article-content">
       <h1 id="subsetting-data-in-r">Subsetting Data in R</h1>
 <ul>
-<li>Subsequent data processing setps (statistical analysis, graph generation) works best if you select the data that you are interested in. Splitting up large data sets into multiple subsetted dataframes has many functions in R programming.</li>
+<li>
+<p>Subsequent data processing setps (statistical analysis, graph generation) works best if you select the data that you are interested in.</p>
+</li>
+<li>
+<p>Splitting up large data sets into multiple subsetted dataframes has many functions in R programming and is a useful tactic to maintain readable code blocks.</p>
+</li>
 </ul>
 <h1 id="get-data">Get data</h1>
 <h3 id="link-to-explaination-about-raw-datahttpsblack-cat-enthusiastgithubiopurple_monkey_dishwasher20230712example-data"><a href="https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/">Link to explaination about raw data</a></h3>
 <h3 id="link-to-raw-datahttpsgithubcomblack-cat-enthusiastblogdown_testblobmastercontentpost2023-07-12-example-dataeb_rats_nicotine_sensitizationcsv"><a href="https://github.com/black-cat-enthusiast/Blogdown_Test/blob/master/content/post/2023-07-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv">Link to raw data</a></h3>
-<pre><code class="language-r">library(tidyverse) 
-data &lt;- read_csv(&quot;EB_Rats_Nicotine_Sensitization.csv&quot;)
-head(data)
+<pre><code class="language-r">library(tidyverse) # Load the tidyverse package
+data &lt;- read_csv(&quot;EB_Rats_Nicotine_Sensitization.csv&quot;) # Call in the data
+head(data) # check out the first six rows of data. 
 </code></pre>
 <pre><code>## # A tibble: 6 × 9
 ##      ID Sex    Status PREhorm CHALhorm   Hab IND_1 IND_2  CHAL
@@ -93,17 +98,19 @@ head(data)
 ## 5     5 Female OVX          0        0 21715 23184 27482 26809
 ## 6     6 Female OVX          0        0 14733 19223 23280 23845
 </code></pre>
-<h1 id="select-some-of-the-columns">Select some of the columns</h1>
+<h1 id="subsetting--select-only-a-portion-of-the-data">Subsetting = Select only a portion of the data.</h1>
+<p>There are multiple methods to accomplish selecting only some of the data in R. 3 different approaches are outlined below. Which approach is preferable for a given situation depends on the parameters of the task and the desired output.</p>
 <h3 id="method-1-by-position">Method #1: by position</h3>
 <ul>
-<li>
-<p>In R language, square brackets <input disabled="" type="checkbox"> mean &ldquo;where&rdquo;. Inside of the square brackets, there can be two sets of numbers separated by a comma. Values that come before the comma refer to the ROWS and values that come after the comma refer to the COLUMNS. Blank space means &ldquo;take all&rdquo;.</p>
-</li>
-<li>
-<p>Square brackets can be used to select a &ldquo;subset&rdquo; of a larger dataframe.</p>
+<li>In R language, square brackets mean &ldquo;where&rdquo;. Inside of the square brackets, there can be two sets of numbers separated by a comma.
+<ul>
+<li>Values that come before the comma refer to the ROWS</li>
+<li>Values that come after the comma refer to the COLUMNS</li>
+<li>A blank space means &ldquo;take all&rdquo;</li>
+</ul>
 </li>
 </ul>
-<pre><code class="language-r"># Select the first 6 columns 
+<pre><code class="language-r"># Select all rows of the first 6 columns 
 data[ ,1:6]
 </code></pre>
 <pre><code>## # A tibble: 47 × 6
@@ -121,7 +128,7 @@ data[ ,1:6]
 ## 10    10 Female OVX          0        1 17699
 ## # ℹ 37 more rows
 </code></pre>
-<pre><code class="language-r"># Select the first 6 rows 
+<pre><code class="language-r"># Select all columns of the first 6 rows 
 data[1:6, ]
 </code></pre>
 <pre><code>## # A tibble: 6 × 9
@@ -170,7 +177,7 @@ data[1:6,1:6]
 <p>Especially when working with larger datasets, you may want to subset based on cell values rather than position within the dataframe. Selecting based on content is a more robust approach because it does not require manual accuracy checks.</p>
 </li>
 <li>
-<p>including a comma and a space after the expression instructs R to take all the data from the columns. This is important as the program will throw an error if you forget to include comma space.</p>
+<p>Including a comma and a space after the expression instructs R to take all the data from the columns. This is important as the program will throw an error if you forget to include comma space.</p>
 </li>
 </ul>
 <pre><code class="language-r"># Select all columns for the rows that have the value &quot;OIL&quot; in the column PREhorm:
@@ -191,9 +198,7 @@ data[data$PREhorm == 1, ] # Select instances of &quot;data&quot; where the value
 ## 10    16 Female OVX          1        1 14596 13992 16237 22711
 ## # ℹ 14 more rows
 </code></pre>
-<ul>
-<li>Data can also be selected based on multiple criteria:</li>
-</ul>
+<p>Data can also be selected based on multiple criteria:</p>
 <pre><code class="language-r"># Select all columns for rows where PREhorm equals exactly 1 AND CHALhorm equals exactly 1. 
 data[data$PREhorm == 1 &amp; data$CHALhorm == 1, ]
 </code></pre>
