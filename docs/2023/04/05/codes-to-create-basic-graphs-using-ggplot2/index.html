@@ -78,6 +78,8 @@ library(reshape2)
 library(ggpubr)
 </code></pre>
 <h1 id="get-data-eb-rats-data-from-my-ma-thesis---published-herehttpslinkspringercomarticle101007s00213-020-05685-8">Get Data: EB Rats (data from my MA thesis - published <a href="https://link.springer.com/article/10.1007/s00213-020-05685-8">here</a>)</h1>
+<h3 id="link-to-explaination-about-data-used-in-the-examples-belowhttpsblack-cat-enthusiastgithubiopurple_monkey_dishwasher20230712example-data"><a href="https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/">Link to explaination about data used in the examples below</a></h3>
+<h3 id="link-to-raw-datahttpsgithubcomblack-cat-enthusiastpurple_monkey_dishwasherblobmastercontentpost2023-08-12-example-dataeb_rats_nicotine_sensitizationcsv"><a href="https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv">Link to raw data</a></h3>
 <pre><code class="language-r">data &lt;- read_csv(&quot;EB_Rats_Nicotine_Sensitization.csv&quot;)
 
 data$PREhorm = factor(data$PREhorm,# change the PREhorm variable to a factor

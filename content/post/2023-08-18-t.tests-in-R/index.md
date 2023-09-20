@@ -2,7 +2,9 @@
 title: "t.tests in R"
 author: "JLB"
 date: "2023-07-19"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 
@@ -41,7 +43,7 @@ There are 3 distinct yet related types of t-tests, each used for unique scenario
 2. paired samples t-test (aka "dependent samples")
 3. independent samples t-test
 
-<img src="t.test_types.png" width="602" />
+<img src="t.test_types.png" width="80%" />
 
 # One sample t-test
 - As the name implies, involves a situation where you are testing one group of individuals against a single "known" value. 
@@ -77,7 +79,9 @@ WHERE
 
 # Examples using EB_Nicotine_Rats
 
-### [Link to raw data used in this example.](https://github.com/black-cat-enthusiast/Blogdown_Test/blob/master/content/post/2023-07-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
+### [Link to explaination about data used in the examples below](https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/)
+
+### [Link to raw data](https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
 
 #### *Below are codes to execute each type of t-test in R.*
 
@@ -178,7 +182,7 @@ t.test(Chal~PREhorm, data=data, var.equal = TRUE)
 ##        19343.65        24860.96
 ```
 
-Written result:
+## Written result:
 
 > On the challenge day, rats treated with EB during the "induction" phase of sensitization travelled longer distances than those treated with OIL (*t*(45) = 4.82, *p* < 0.001).
 

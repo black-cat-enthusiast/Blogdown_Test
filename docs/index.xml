@@ -6,13 +6,13 @@
     <description>Recent content on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 19 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 30 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ANOVA </title>
-      <link>/2023/07/19/anova/</link>
-      <pubDate>Wed, 19 Jul 2023 00:00:00 +0000</pubDate>
+      <link>/2023/07/30/anova/</link>
+      <pubDate>Sun, 30 Jul 2023 00:00:00 +0000</pubDate>
       
-      <guid>/2023/07/19/anova/</guid>
+      <guid>/2023/07/30/anova/</guid>
       <description>The General Linear Model The GLM is a family of analytic approaches that involves fitting lines to data points.
 The underlying formula for the GLM: $$ \dfrac{signal}{noise} $$
 OR, in other words,
@@ -50,7 +50,7 @@ DRY (“Don&amp;rsquo;t Repeat Yourself”) principle follows the idea of every 
       <pubDate>Wed, 05 Apr 2023 00:00:00 +0000</pubDate>
       
       <guid>/2023/04/05/codes-to-create-basic-graphs-using-ggplot2/</guid>
-      <description>Load packages library(tidyverse)library(reshape2)library(ggpubr)Get Data: EB Rats (data from my MA thesis - published here) data &amp;lt;- read_csv(&amp;quot;EB_Rats_Nicotine_Sensitization.csv&amp;quot;)data$PREhorm = factor(data$PREhorm,# change the PREhorm variable to a factorlevels = c(0,1), # With two levels, 0 and 1 (ordered)labels = c(&amp;quot;OIL&amp;quot;,&amp;quot;EB&amp;quot;)) # And label those levels, the condition names.data$CHALhorm = factor(data$CHALhorm,# change the CHALhorm variable to a factorlevels = c(0,1), # With two levels, 0 and 1 (ordered)labels = c(&amp;quot;OIL&amp;quot;,&amp;quot;EB&amp;quot;)) # And label those levels, the condition names.</description>
+      <description>Load packages library(tidyverse)library(reshape2)library(ggpubr)Get Data: EB Rats (data from my MA thesis - published here) Link to explaination about data used in the examples below Link to raw data data &amp;lt;- read_csv(&amp;quot;EB_Rats_Nicotine_Sensitization.csv&amp;quot;)data$PREhorm = factor(data$PREhorm,# change the PREhorm variable to a factorlevels = c(0,1), # With two levels, 0 and 1 (ordered)labels = c(&amp;quot;OIL&amp;quot;,&amp;quot;EB&amp;quot;)) # And label those levels, the condition names.data$CHALhorm = factor(data$CHALhorm,# change the CHALhorm variable to a factorlevels = c(0,1), # With two levels, 0 and 1 (ordered)labels = c(&amp;quot;OIL&amp;quot;,&amp;quot;EB&amp;quot;)) # And label those levels, the condition names.</description>
     </item>
     
     <item>
@@ -70,7 +70,7 @@ Developing proficiency in R Learning to read &amp;amp; write code really is like
       
       <guid>/2023/02/22/introduction-to-ggplot2/</guid>
       <description>Why use ggplot2? There are several ways to create graphical visualizations in R, but ggplot is by far the most comprehensive and well-documented.
-ggplot2 allows for control of every element of the chart. any graph that you can imagine, you can make! library(tidyverse) # The tidyverse contains ggplot2.library(reshape2) # for the melt function.data &amp;lt;- read_csv(&amp;quot;EB_Rats_Nicotine_Sensitization.csv&amp;quot;) # get datadata$PREhorm = factor(data$PREhorm, levels=c(0,1),labels=c(&amp;quot;OIL&amp;quot;,&amp;quot;EB&amp;quot;))data$CHALhorm = factor(data$CHALhorm,levels=c(0,1),labels=c(&amp;quot;OIL&amp;quot;,&amp;quot;EB&amp;quot;))Take a look at the top 6 rows of data:</description>
+ggplot2 allows for control of every element of the chart. any graph that you can imagine, you can make! Link to explaination about data used in the examples below Link to raw data library(tidyverse) # The tidyverse contains ggplot2.library(reshape2) # for the melt function.data &amp;lt;- read_csv(&amp;quot;EB_Rats_Nicotine_Sensitization.</description>
     </item>
     
     <item>

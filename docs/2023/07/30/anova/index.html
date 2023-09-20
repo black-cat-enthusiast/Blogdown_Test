@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.115.2">
+
+
+<title>ANOVA  - A Hugo website</title>
+<meta property="og:title" content="ANOVA  - A Hugo website">
+
+
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/black-cat-enthusiast/Blogdown_Test">Github</a></li>
+    
+    <li><a href="https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/">Home</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">7 min read</span>
+    
+
+    <h1 class="article-title">ANOVA </h1>
+
+    
+    <span class="article-date">2023-07-30</span>
+    
+
+    <div class="article-content">
+      <h1 id="the-general-linear-model">The General Linear Model</h1>
+<p>The GLM is a <em>family</em> of analytic approaches that involves fitting lines to data points.</p>
+<h3 id="the-underlying-formula-for-the-glm">The underlying formula for the GLM:</h3>
+<p>$$ \dfrac{signal}{noise} $$</p>
+<p>OR, in other words,</p>
+<p>$$ \dfrac{systematic\ variance}{error\ variance} $$</p>
+<h1 id="anova-analysis-of-variance">ANOVA (Analysis of Variance)</h1>
+<p>Like <a href="">t-tests</a>, ANOVA <strong>requires</strong> <em>categorical IV(s)</em> and a <em>continuous DV</em></p>
+<ul>
+<li>ANOVA can handle any number of groups and any number of factors.
+<ul>
+<li>This is the main advantage of ANOVA over t-tests, which can only handle <strong>2 groups</strong> and <strong>a single factor</strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="dimensions-of-the-anova">Dimensions of the ANOVA:</h1>
+<h3 id="the-number-of-factors">The number of factors:</h3>
+<ul>
+<li><strong>&ldquo;One-Way ANOVA&rdquo;</strong> = 1 factor</li>
+<li><strong>&ldquo;Two-way ANOVA&rdquo;</strong> = 2 factors</li>
+</ul>
+<h3 id="the-experimental-design">The experimental design:</h3>
+<ul>
+<li><strong>repeated measures</strong> = Multiple measurements involving the same individuals.</li>
+<li><strong>independent samples</strong> = Comparisons involving multiple groups of individuals.</li>
+</ul>
+<h3 id="link-to-explaination-about-data-used-in-the-examples-belowhttpsblack-cat-enthusiastgithubiopurple_monkey_dishwasher20230712example-data"><a href="https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/">Link to explaination about data used in the examples below</a></h3>
+<h3 id="link-to-raw-datahttpsgithubcomblack-cat-enthusiastpurple_monkey_dishwasherblobmastercontentpost2023-08-12-example-dataeb_rats_nicotine_sensitizationcsv"><a href="https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv">Link to raw data</a></h3>
+<h1 id="one-way-anova-independent-samples">One-Way ANOVA (Independent Samples)</h1>
+<img src="../../../../post/2023-08-19-ANOVA-in-R/ANOVA_1_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<ul>
+<li>Here, we are comparing whether the 4 individual <strong>group means</strong> is a better fit for the data than the <strong>Grand Mean</strong></li>
+<li>Vertical coloured lines represent the <strong>residuals</strong></li>
+<li>To begin calculating ANOVA, each <strong>residual</strong> is squared (^2)</li>
+<li>The <strong>sum of squares</strong> = the sum of all the squared residuals (All added together)</li>
+</ul>
+<p>Mean Square is calculated separately for each model:</p>
+<p>$$ Mean\ Square = \dfrac {Sum\ of\ Squares}{df} $$</p>
+<p>The ratio between the two models is computed as the final <em>F</em> value:</p>
+<p>$$ F =  \dfrac{Mean\ Square\ Between}{Mean\ Square\ Within} $$</p>
+<h3 id="prepare-data">Prepare data</h3>
+<ul>
+<li>Prepare a column named &ldquo;group&rdquo; that codes the four experimental conditions.</li>
+</ul>
+<pre><code class="language-r"># create a single variable - &quot;group&quot; - to represent hormone treatments
+data &lt;- data %&gt;%
+  mutate(group = case_when(
+    data$PREhorm == &quot;OIL&quot; &amp; data$CHALhorm == &quot;OIL&quot; ~ &quot;OIL / OIL&quot;,
+    data$PREhorm == &quot;EB&quot; &amp;  data$CHALhorm == &quot;OIL&quot; ~ &quot;EB / OIL&quot;,
+    data$PREhorm == &quot;OIL&quot; &amp; data$CHALhorm == &quot;EB&quot; ~ &quot;OIL / EB&quot;,
+    data$PREhorm == &quot;EB&quot; &amp;  data$CHALhorm == &quot;EB&quot; ~ &quot;EB / EB&quot;
+  ))
+# Reorder the &quot;group&quot; variable 
+data$group &lt;- as.character(data$group)
+data$group &lt;- factor(data$group, levels=c(&quot;OIL / OIL&quot;, &quot;EB / OIL&quot;, &quot;OIL / EB&quot;, &quot;EB / EB&quot;))
+</code></pre>
+<h3 id="compute-one-way-anova">Compute one-way ANOVA</h3>
+<pre><code class="language-r">oneway.test(CHAL ~ group, data=data, var.equal = TRUE)
+</code></pre>
+<pre><code>## 
+## 	One-way analysis of means
+## 
+## data:  CHAL and group
+## F = 7.7801, num df = 3, denom df = 43, p-value = 0.0002934
+</code></pre>
+<h3 id="compute-tukey-follow-up-comparisons-of-pairwise-between-group-comparisons">Compute Tukey Follow-up comparisons of pairwise between-group comparisons.</h3>
+<pre><code class="language-r">a &lt;- aov(CHAL ~ group, data=data)
+TukeyHSD(a, conf.level = .95)
+</code></pre>
+<pre><code>##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = CHAL ~ group, data = data)
+## 
+## $group
+##                          diff          lwr       upr     p adj
+## EB / OIL-OIL / OIL  5700.5985   1260.08316 10141.114 0.0070700
+## OIL / EB-OIL / OIL  -799.5682  -5240.08351  3640.947 0.9628549
+## EB / EB-OIL / OIL   4499.6818     59.16649  8940.197 0.0459711
+## OIL / EB-EB / OIL  -6500.1667 -10843.07633 -2157.257 0.0013542
+## EB / EB-EB / OIL   -1200.9167  -5543.82633  3141.993 0.8808000
+## EB / EB-OIL / EB    5299.2500    956.34033  9642.160 0.0112658
+</code></pre>
+<ul>
+<li>
+<p>The above example is not &ldquo;the best&rdquo; application of the OneWay ANOVA, or the best analysis for the data - The above approach would be appropriate if the 4 conditions were unrelated.</p>
+</li>
+<li>
+<p>Here, the experiemnt is really a 2x2 design (PREhorm*CHALhorm), so it would be more appropriate to analyze using a Two-way ANOVA instead.</p>
+</li>
+</ul>
+<h1 id="two-way-anova-on-eb-rats-data--indpendent-samples">Two-Way ANOVA on EB Rats Data  (Indpendent Samples)</h1>
+<pre><code class="language-r">a &lt;- aov(CHAL ~ PREhorm * CHALhorm, data=data)
+summary(a)
+</code></pre>
+<pre><code>##                  Df    Sum Sq   Mean Sq F value    Pr(&gt;F)    
+## PREhorm           1 357515922 357515922  22.563 0.0000229 ***
+## CHALhorm          1  11849781  11849781   0.748     0.392    
+## PREhorm:CHALhorm  1    472503    472503   0.030     0.864    
+## Residuals        43 681351402  15845381                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+</code></pre>
+<h2 id="written-result">Written Result:</h2>
+<blockquote>
+<p>Rats treated with EB during the induction phase of sensitization travelled longer distances on the challenge day than rats treated with OIL vehicle during induction (<em>F</em>(1,43) = 22.40, <em>p</em> &lt; 0.001).</p>
+</blockquote>
+<blockquote>
+<p>The effect of EB treatment on the challenge day and the interaction between induction and challenge hormone were non-significant (<em>p</em> = 0.39, <em>p</em> = 0.86, respectively).</p>
+</blockquote>
+<h1 id="one-way-repeated-measures-anova">One-Way Repeated Measures ANOVA</h1>
+<p>Could be used to answer the question <em>do the rats exhibit overall increases in distance travelled across the multi-injection paradigm?</em></p>
+<ul>
+<li>The question could also be framed as <em>deos the nicotine paradigm produces locomotor sensitization?</em></li>
+</ul>
+<p>The same data are plotted to showcase individual changes in distance travelled across the four days of testing.</p>
+<img src="../../../../post/2023-08-19-ANOVA-in-R/ANOVA_1_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" />
+<h3 id="prepare-data-1">Prepare Data</h3>
+<pre><code class="language-r">library(reshape2)
+long_data &lt;- data %&gt;%
+  select(c(&quot;ID&quot;,&quot;Hab&quot;,&quot;IND_1&quot;,&quot;IND_2&quot;,&quot;CHAL&quot;)) %&gt;%
+  melt(id.vars = &quot;ID&quot;)
+head(long_data)
+</code></pre>
+<pre><code>##   ID variable value
+## 1  1      Hab 16625
+## 2  2      Hab 17097
+## 3  3      Hab 17909
+## 4  4      Hab 14199
+## 5  5      Hab 21715
+## 6  6      Hab 14733
+</code></pre>
+<h3 id="compute-anova">Compute ANOVA</h3>
+<pre><code class="language-r">library(rstatix)
+a &lt;- anova_test(data=long_data, dv=value, wid=ID, within = variable)
+get_anova_table(a)
+</code></pre>
+<pre><code>## ANOVA Table (type III tests)
+## 
+##     Effect  DFn    DFd      F                      p p&lt;.05   ges
+## 1 variable 2.47 113.51 48.421 0.00000000000000000458     * 0.266
+</code></pre>
+<h1 id="compute-follow-up-comparisons">Compute Follow-up comparisons</h1>
+<pre><code class="language-r">long_data %&gt;%
+  pairwise_t_test(
+  value ~ variable, paired = TRUE,
+  p.adjust.method = &quot;bonferroni&quot;
+  )
+</code></pre>
+<pre><code>## # A tibble: 6 × 10
+##   .y.   group1 group2    n1    n2 statistic    df        p    p.adj p.adj.signif
+## * &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;       
+## 1 value Hab    IND_1     47    47     -1.57    46 1.24e- 1 7.44e- 1 ns          
+## 2 value Hab    IND_2     47    47     -5.82    46 5.37e- 7 3.22e- 6 ****        
+## 3 value Hab    CHAL      47    47     -8.91    46 1.39e-11 8.34e-11 ****        
+## 4 value IND_1  IND_2     47    47     -6.58    46 3.94e- 8 2.36e- 7 ****        
+## 5 value IND_1  CHAL      47    47     -9.92    46 5.31e-13 3.19e-12 ****        
+## 6 value IND_2  CHAL      47    47     -4.72    46 2.22e- 5 1.33e- 4 ***
+</code></pre>
+<h2 id="written-result-1">Written Result:</h2>
+<blockquote>
+<p>Rats treated with EB during the induction phase travelled longer distances on the challenge day than did rats treated with OIL vehicle during induction (<em>F</em>(1,45) = 23.19, <em>p</em> &lt; 0.001)</p>
+</blockquote>
+<blockquote>
+<p>Rats treated with EB during the induction phase exhibited an increase in distance travelled between the second induction day and the challange day (<em>p</em> &lt; 0.001) whereas rats treated with OIL vehicle during induction did not (<em>p</em> = 0.24)</p>
+</blockquote>
+<h1 id="two-way-repeated-measures-anova">Two-Way Repeated Measures ANOVA</h1>
+<h3 id="prep-data">Prep Data</h3>
+<ul>
+<li>Output: A &ldquo;long-form&rdquo; version of the dataframe.</li>
+</ul>
+<pre><code class="language-r">library(reshape2) # Required for the melt function
+long_data_2 &lt;- data %&gt;% # Take the long dataframe AND TEHN 
+  select(c(&quot;ID&quot;,&quot;PREhorm&quot;,&quot;Hab&quot;,&quot;IND_1&quot;,&quot;IND_2&quot;,&quot;CHAL&quot;)) %&gt;% 
+  melt(id.vars = c(&quot;ID&quot;,&quot;PREhorm&quot;)) # Switch to ggplot format
+head(long_data_2) # Check out the result
+</code></pre>
+<pre><code>##   ID PREhorm variable value
+## 1  1      EB      Hab 16625
+## 2  2      EB      Hab 17097
+## 3  3     OIL      Hab 17909
+## 4  4     OIL      Hab 14199
+## 5  5     OIL      Hab 21715
+## 6  6     OIL      Hab 14733
+</code></pre>
+<h3 id="compute-anova-1">Compute ANOVA</h3>
+<pre><code class="language-r">a &lt;- anova_test(data=long_data_2, dv=value, wid=ID, within = variable, between = PREhorm)
+# Make a pretty table: 
+knitr::kable(get_anova_table(a))
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Effect</th>
+<th style="text-align:right">DFn</th>
+<th style="text-align:right">DFd</th>
+<th style="text-align:right">F</th>
+<th style="text-align:right">p</th>
+<th style="text-align:left">p&lt;.05</th>
+<th style="text-align:right">ges</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">PREhorm</td>
+<td style="text-align:right">1.00</td>
+<td style="text-align:right">45.00</td>
+<td style="text-align:right">8.395</td>
+<td style="text-align:right">0.006000</td>
+<td style="text-align:left">*</td>
+<td style="text-align:right">0.109</td>
+</tr>
+<tr>
+<td style="text-align:left">variable</td>
+<td style="text-align:right">2.49</td>
+<td style="text-align:right">112.23</td>
+<td style="text-align:right">55.547</td>
+<td style="text-align:right">0.000000</td>
+<td style="text-align:left">*</td>
+<td style="text-align:right">0.298</td>
+</tr>
+<tr>
+<td style="text-align:left">PREhorm:variable</td>
+<td style="text-align:right">2.49</td>
+<td style="text-align:right">112.23</td>
+<td style="text-align:right">8.630</td>
+<td style="text-align:right">0.000103</td>
+<td style="text-align:left">*</td>
+<td style="text-align:right">0.062</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute-follow-up-comparisons-version-1-of-2">Compute Follow-up comparisons version 1 of 2:</h3>
+<ul>
+<li>This style of follow up allows you to assess individual changes between days within individuals of different groups.</li>
+</ul>
+<pre><code class="language-r">a &lt;- long_data_2 %&gt;%
+  group_by(PREhorm)%&gt;%
+  pairwise_t_test(
+  value ~ variable, paired = TRUE,
+  p.adjust.method = &quot;bonferroni&quot;
+  )
+# Make a pretty table: 
+library(kableExtra)
+knitr::kable(a)
+</code></pre>
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> PREhorm </th>
+   <th style="text-align:left;"> .y. </th>
+   <th style="text-align:left;"> group1 </th>
+   <th style="text-align:left;"> group2 </th>
+   <th style="text-align:right;"> n1 </th>
+   <th style="text-align:right;"> n2 </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> df </th>
+   <th style="text-align:right;"> p </th>
+   <th style="text-align:right;"> p.adj </th>
+   <th style="text-align:left;"> p.adj.signif </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> OIL </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> Hab </td>
+   <td style="text-align:left;"> IND_1 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 0.0074401 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 0.9940000 </td>
+   <td style="text-align:right;"> 1.0000000 </td>
+   <td style="text-align:left;"> ns </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> OIL </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> Hab </td>
+   <td style="text-align:left;"> IND_2 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> -2.6695000 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 0.0140000 </td>
+   <td style="text-align:right;"> 0.0840000 </td>
+   <td style="text-align:left;"> ns </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> OIL </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> Hab </td>
+   <td style="text-align:left;"> CHAL </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> -3.8584200 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 0.0008510 </td>
+   <td style="text-align:right;"> 0.0050000 </td>
+   <td style="text-align:left;"> ** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> OIL </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> IND_1 </td>
+   <td style="text-align:left;"> IND_2 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> -4.1184209 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 0.0004520 </td>
+   <td style="text-align:right;"> 0.0030000 </td>
+   <td style="text-align:left;"> ** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> OIL </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> IND_1 </td>
+   <td style="text-align:left;"> CHAL </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> -5.8470014 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 0.0000070 </td>
+   <td style="text-align:right;"> 0.0000418 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> OIL </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> IND_2 </td>
+   <td style="text-align:left;"> CHAL </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> -1.2941827 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 0.2090000 </td>
+   <td style="text-align:right;"> 1.0000000 </td>
+   <td style="text-align:left;"> ns </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> EB </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> Hab </td>
+   <td style="text-align:left;"> IND_1 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> -2.3646686 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 0.0270000 </td>
+   <td style="text-align:right;"> 0.1610000 </td>
+   <td style="text-align:left;"> ns </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> EB </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> Hab </td>
+   <td style="text-align:left;"> IND_2 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> -6.0380086 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 0.0000037 </td>
+   <td style="text-align:right;"> 0.0000222 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> EB </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> Hab </td>
+   <td style="text-align:left;"> CHAL </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> -11.9300494 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> EB </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> IND_1 </td>
+   <td style="text-align:left;"> IND_2 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> -5.1122968 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 0.0000353 </td>
+   <td style="text-align:right;"> 0.0002120 </td>
+   <td style="text-align:left;"> *** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> EB </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> IND_1 </td>
+   <td style="text-align:left;"> CHAL </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> -9.7292281 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> EB </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> IND_2 </td>
+   <td style="text-align:left;"> CHAL </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> -5.8054227 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 0.0000065 </td>
+   <td style="text-align:right;"> 0.0000389 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+</tbody>
+</table>
+<h3 id="compute-follow-up-comparisons-version-2-of-2">Compute Follow-up comparisons version 2 of 2:</h3>
+<ul>
+<li>This style of follow up allows you to assess between-group differences on each day of testing.</li>
+</ul>
+<pre><code class="language-r">a &lt;- long_data_2 %&gt;%
+  group_by(variable)%&gt;%
+  pairwise_t_test(
+  value ~ PREhorm, paired = FALSE,
+  p.adjust.method = &quot;bonferroni&quot;
+  )
+# Make a pretty table: 
+knitr::kable(a)
+</code></pre>
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> variable </th>
+   <th style="text-align:left;"> .y. </th>
+   <th style="text-align:left;"> group1 </th>
+   <th style="text-align:left;"> group2 </th>
+   <th style="text-align:right;"> n1 </th>
+   <th style="text-align:right;"> n2 </th>
+   <th style="text-align:right;"> p </th>
+   <th style="text-align:left;"> p.signif </th>
+   <th style="text-align:right;"> p.adj </th>
+   <th style="text-align:left;"> p.adj.signif </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Hab </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> OIL </td>
+   <td style="text-align:left;"> EB </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 0.7340000 </td>
+   <td style="text-align:left;"> ns </td>
+   <td style="text-align:right;"> 0.7340000 </td>
+   <td style="text-align:left;"> ns </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> IND_1 </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> OIL </td>
+   <td style="text-align:left;"> EB </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 0.0879000 </td>
+   <td style="text-align:left;"> ns </td>
+   <td style="text-align:right;"> 0.0879000 </td>
+   <td style="text-align:left;"> ns </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> IND_2 </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> OIL </td>
+   <td style="text-align:left;"> EB </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 0.0536000 </td>
+   <td style="text-align:left;"> ns </td>
+   <td style="text-align:right;"> 0.0536000 </td>
+   <td style="text-align:left;"> ns </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CHAL </td>
+   <td style="text-align:left;"> value </td>
+   <td style="text-align:left;"> OIL </td>
+   <td style="text-align:left;"> EB </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 0.0000169 </td>
+   <td style="text-align:left;"> **** </td>
+   <td style="text-align:right;"> 0.0000169 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+</tbody>
+</table>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

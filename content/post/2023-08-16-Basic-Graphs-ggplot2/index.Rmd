@@ -19,6 +19,11 @@ library(ggpubr)
 ```
 
 # Get Data: EB Rats (data from my MA thesis - published [here](https://link.springer.com/article/10.1007/s00213-020-05685-8))
+
+### [Link to explaination about data used in the examples below](https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/)
+
+### [Link to raw data](https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
+
 ```{r}
 data <- read_csv("EB_Rats_Nicotine_Sensitization.csv")
 

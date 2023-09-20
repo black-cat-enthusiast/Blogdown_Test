@@ -89,7 +89,9 @@ WHERE
 
 # Examples using EB_Nicotine_Rats
 
-### [Link to raw data used in this example.](https://github.com/black-cat-enthusiast/Blogdown_Test/blob/master/content/post/2023-07-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
+### [Link to explaination about data used in the examples below](https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/)
+
+### [Link to raw data](https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
 
 #### *Below are codes to execute each type of t-test in R.*
 

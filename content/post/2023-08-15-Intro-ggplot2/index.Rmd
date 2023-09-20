@@ -16,6 +16,10 @@ There are several ways to create graphical visualizations in R, but ggplot is by
 - ggplot2 allows for control of every element of the chart. 
 - any graph that you can imagine, you can make!
 
+### [Link to explaination about data used in the examples below](https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/)
+
+### [Link to raw data](https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
+
 ```{r,message=FALSE,warning=FALSE}
 library(tidyverse) # The tidyverse contains ggplot2.
 library(reshape2) # for the melt function.

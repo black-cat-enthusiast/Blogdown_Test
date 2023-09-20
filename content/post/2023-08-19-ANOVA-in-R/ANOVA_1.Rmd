@@ -1,7 +1,7 @@
 ---
 title: "ANOVA "
 author: "JLB"
-date: "2023-07-30
+date: "2023-07-30"
 output: html_document
 ---
 
@@ -47,6 +47,10 @@ Like [t-tests](), ANOVA **requires** *categorical IV(s)* and a *continuous DV*
 
 - **repeated measures** = Multiple measurements involving the same individuals.
 - **independent samples** = Comparisons involving multiple groups of individuals.
+
+### [Link to explaination about data used in the examples below](https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/)
+
+### [Link to raw data](https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
 
 ```{r, include=FALSE}
 library(tidyverse)
@@ -274,7 +278,7 @@ library(reshape2) # Required for the melt function
 long_data_2 <- data %>% # Take the long dataframe AND TEHN 
   select(c("ID","PREhorm","Hab","IND_1","IND_2","CHAL")) %>% 
   melt(id.vars = c("ID","PREhorm")) # Switch to ggplot format
-head(long_data) # Check out the result
+head(long_data_2) # Check out the result
 ```
 
 ### Compute ANOVA

@@ -55,6 +55,10 @@ Here, the function returned the value of 10 because it divided the input (100) b
 
 ### Solution: Generate a custom function to create the specified graph, then pass each of the variables to the function: 
 
+### [Link to explaination about data used in the examples below](https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/)
+
+### [Link to raw data](https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
+
 ```{r, message=FALSE,warning=FALSE}
 library(reshape2) # Load packages
 library(tidyverse)

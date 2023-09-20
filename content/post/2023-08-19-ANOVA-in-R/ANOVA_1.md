@@ -1,7 +1,7 @@
 ---
 title: "ANOVA "
 author: "JLB"
-date: "2023-07-19"
+date: "2023-07-30"
 output: html_document
 ---
 
@@ -40,11 +40,15 @@ Like [t-tests](), ANOVA **requires** *categorical IV(s)* and a *continuous DV*
 - **repeated measures** = Multiple measurements involving the same individuals.
 - **independent samples** = Comparisons involving multiple groups of individuals.
 
+### [Link to explaination about data used in the examples below](https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/)
+
+### [Link to raw data](https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
+
 
 
 # One-Way ANOVA (Independent Samples)
 
-<img src="/post/2023-07-17-ANOVA-in-R/ANOVA_1_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="/post/2023-08-19-ANOVA-in-R/ANOVA_1_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 - Here, we are comparing whether the 4 individual **group means** is a better fit for the data than the **Grand Mean** 
 - Vertical coloured lines represent the **residuals** 
@@ -152,7 +156,7 @@ Could be used to answer the question *do the rats exhibit overall increases in d
 
 The same data are plotted to showcase individual changes in distance travelled across the four days of testing. 
 
-<img src="/post/2023-07-17-ANOVA-in-R/ANOVA_1_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" />
+<img src="/post/2023-08-19-ANOVA-in-R/ANOVA_1_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" />
 
 ### Prepare Data
 
@@ -227,17 +231,17 @@ library(reshape2) # Required for the melt function
 long_data_2 <- data %>% # Take the long dataframe AND TEHN 
   select(c("ID","PREhorm","Hab","IND_1","IND_2","CHAL")) %>% 
   melt(id.vars = c("ID","PREhorm")) # Switch to ggplot format
-head(long_data) # Check out the result
+head(long_data_2) # Check out the result
 ```
 
 ```
-##   ID variable value
-## 1  1      Hab 16625
-## 2  2      Hab 17097
-## 3  3      Hab 17909
-## 4  4      Hab 14199
-## 5  5      Hab 21715
-## 6  6      Hab 14733
+##   ID PREhorm variable value
+## 1  1      EB      Hab 16625
+## 2  2      EB      Hab 17097
+## 3  3     OIL      Hab 17909
+## 4  4     OIL      Hab 14199
+## 5  5     OIL      Hab 21715
+## 6  6     OIL      Hab 14733
 ```
 
 ### Compute ANOVA
