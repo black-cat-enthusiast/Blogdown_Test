@@ -20,7 +20,6 @@ menu:
       url: /about/
     - name: Github
       url: https://github.com/black-cat-enthusiast/Blogdown_Test
-
 params:
   MathJaxCDN: //cdnjs.cloudflare.com/ajax/libs
   MathJaxVersion: 2.7.5

@@ -11,9 +11,9 @@
 
 <meta name="author" content="JLB" />
 
-<meta name="date" content="2023-08-12" />
+<meta name="date" content="2023-02-20" />
 
-<title>Subsetting</title>
+<title>Subsetting Data</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,9 +350,9 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Subsetting</h1>
+<h1 class="title toc-ignore">Subsetting Data</h1>
 <h4 class="author">JLB</h4>
-<h4 class="date">2023-08-12</h4>
+<h4 class="date">2023-02-20</h4>
 
 </div>
 
@@ -360,17 +360,26 @@ display: none;
 <div id="subsetting-data-in-r" class="section level1">
 <h1>Subsetting Data in R</h1>
 <ul>
-<li>Subsequent data processing setps (statistical analysis, graph
+<li><p>Subsequent data processing setps (statistical analysis, graph
 generation) works best if you select the data that you are interested
-in. Splitting up large data sets into multiple subsetted dataframes has
-many functions in R programming.</li>
+in.</p></li>
+<li><p>Splitting up large data sets into multiple subsetted dataframes
+has many functions in R programming and is a useful tactic to maintain
+readable code blocks.</p></li>
 </ul>
 </div>
 <div id="get-data" class="section level1">
 <h1>Get data</h1>
-<pre class="r"><code>library(tidyverse) 
-data &lt;- read_csv(&quot;EB_Rats_Nicotine_Sensitization.csv&quot;)
-head(data)</code></pre>
+<div id="link-to-explaination-about-raw-data" class="section level3">
+<h3><a href="https://black-cat-enthusiast.github.io/Purple_Monkey_Dishwasher/2023/07/12/example-data/">Link
+to explaination about raw data</a></h3>
+</div>
+<div id="link-to-raw-data" class="section level3">
+<h3><a href="https://github.com/black-cat-enthusiast/Blogdown_Test/blob/master/content/post/2023-07-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv">Link
+to raw data</a></h3>
+<pre class="r"><code>library(tidyverse) # Load the tidyverse package
+data &lt;- read_csv(&quot;EB_Rats_Nicotine_Sensitization.csv&quot;) # Call in the data
+head(data) # check out the first six rows of data. </code></pre>
 <pre><code>## # A tibble: 6 × 9
 ##      ID Sex    Status PREhorm CHALhorm   Hab IND_1 IND_2  CHAL
 ##   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -381,20 +390,25 @@ head(data)</code></pre>
 ## 5     5 Female OVX          0        0 21715 23184 27482 26809
 ## 6     6 Female OVX          0        0 14733 19223 23280 23845</code></pre>
 </div>
-<div id="select-some-of-the-columns" class="section level1">
-<h1>Select some of the columns</h1>
+</div>
+<div id="subsetting-select-only-a-portion-of-the-data." class="section level1">
+<h1>Subsetting = Select only a portion of the data.</h1>
+<p>There are multiple methods to accomplish selecting only some of the
+data in R. 3 different approaches are outlined below. Which approach is
+preferable for a given situation depends on the parameters of the task
+and the desired output.</p>
 <div id="method-1-by-position" class="section level3">
 <h3>Method #1: by position</h3>
 <ul>
-<li><p>In R language, square brackets [ ] mean “where”. Inside of the
-square brackets, there can be two sets of numbers separated by a comma.
-Values that come before the comma refer to the ROWS and values that come
-after the comma refer to the COLUMNS. Blank space means “take
-all”.</p></li>
-<li><p>Square brackets can be used to select a “subset” of a larger
-dataframe.</p></li>
+<li>In R language, square brackets mean “where”. Inside of the square
+brackets, there can be two sets of numbers separated by a comma.
+<ul>
+<li>Values that come before the comma refer to the ROWS</li>
+<li>Values that come after the comma refer to the COLUMNS</li>
+<li>A blank space means “take all”</li>
+</ul></li>
 </ul>
-<pre class="r"><code># Select the first 6 columns 
+<pre class="r"><code># Select all rows of the first 6 columns 
 data[ ,1:6]</code></pre>
 <pre><code>## # A tibble: 47 × 6
 ##       ID Sex    Status PREhorm CHALhorm   Hab
@@ -410,7 +424,7 @@ data[ ,1:6]</code></pre>
 ##  9     9 Female OVX          0        1 15950
 ## 10    10 Female OVX          0        1 17699
 ## # ℹ 37 more rows</code></pre>
-<pre class="r"><code># Select the first 6 rows 
+<pre class="r"><code># Select all columns of the first 6 rows 
 data[1:6, ]</code></pre>
 <pre><code>## # A tibble: 6 × 9
 ##      ID Sex    Status PREhorm CHALhorm   Hab IND_1 IND_2  CHAL
@@ -457,7 +471,7 @@ data[1:6,1:6]</code></pre>
 subset based on cell values rather than position within the dataframe.
 Selecting based on content is a more robust approach because it does not
 require manual accuracy checks.</p></li>
-<li><p>including a comma and a space after the expression instructs R to
+<li><p>Including a comma and a space after the expression instructs R to
 take all the data from the columns. This is important as the program
 will throw an error if you forget to include comma space.</p></li>
 </ul>
@@ -477,9 +491,7 @@ data[data$PREhorm == 1, ] # Select instances of &quot;data&quot; where the value
 ##  9    15 Female OVX          1        1 14391 17036 17698 20912
 ## 10    16 Female OVX          1        1 14596 13992 16237 22711
 ## # ℹ 14 more rows</code></pre>
-<ul>
-<li>Data can also be selected based on multiple criteria:</li>
-</ul>
+<p>Data can also be selected based on multiple criteria:</p>
 <pre class="r"><code># Select all columns for rows where PREhorm equals exactly 1 AND CHALhorm equals exactly 1. 
 data[data$PREhorm == 1 &amp; data$CHALhorm == 1, ]</code></pre>
 <pre><code>## # A tibble: 12 × 9
