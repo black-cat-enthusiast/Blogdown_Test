@@ -17,6 +17,8 @@ I will use data from my [MA thesis](https://dr.library.brocku.ca/handle/10464/14
 
 These data are also [Published](https://pubmed.ncbi.nlm.nih.gov/33130925/) in a peer-reviewed journal.
 
+### [Link to raw data](https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
+
 # Methods
 
 - On each of the 4 days of testing, rats completed a 1hr long open field test (run around empty box - 64cm * 64cm).
@@ -43,7 +45,7 @@ Distance traveled (cm) by each rat during the open field test was captured by an
   + At both timepoints (n = 12)
   + At neither timepoint (Control, n = 11)
   
-### [Link to raw data](https://github.com/black-cat-enthusiast/Blogdown_Test/blob/master/content/post/2023-07-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
+### [Link to raw data](https://github.com/black-cat-enthusiast/Purple_Monkey_Dishwasher/blob/master/content/post/2023-08-12-Example-Data/EB_Rats_Nicotine_Sensitization.csv)
 
 # Load Data in R
 ```{r, message=FALSE, result='hide'}
